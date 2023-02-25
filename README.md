@@ -3,7 +3,7 @@
 
 <h3 align="center">Linh | Alex | Mariah | Thi</h3>
 
-<p align="center"><img align="center" src="images/hi.gif"></p>
+<p align="center"><img align="center" src="app/static/images/hi.gif"></p>
 <h2 align="left">Project: TripMate</h2>
   <ul>
     <h3>What is TripMate ?</h3>
