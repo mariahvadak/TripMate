@@ -37,7 +37,7 @@ pip --version
   <li>Go to your repo and Pull the updated code from the main branch:</li>  
 
 ```bash
-git pull origin master
+git pull origin main
 ```
   <li>Run this command to install required packages:</li>
 
