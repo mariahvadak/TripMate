@@ -20,30 +20,44 @@
   </ul>
 <h2 align="left">Setup & Installation</h2>
 <ul>
-  <li>Go to your repo and Pull updated code from main branch</li>  
+  <li><p>Check if you have Python and pip installed on your machine by running the following commands in your terminal:</p>
+     
+```bash
+python --version
+```  
+
+```bash
+pip --version
+```  
+
+<p>If you don't have Python and/or pip installed, you can download and install them from the following links:</p>
+<ul><p>https://pip.pypa.io/en/stable/installation/</p>
+<p>https://wiki.python.org/moin/BeginnersGuide/Download</p></ul>
+   </li>
+  <li>Go to your repo and Pull the updated code from the main branch:</li>  
 
 ```bash
 git pull origin master
 ```
-  <li>Run this command to install required packages</li>
+  <li>Run this command to install required packages:</li>
 
 ```bash
 pip install -r requirements.txt
 ```
-  <li>Run The App</li>
+  <li>Run the app by executing the following command:</li>
 
 ```bash
 python main.py
 ```
-  <li>View The App</li>
+  <li>View the app by opening your browser and navigating to:</li>
 	<p></p>
 	
- Open browser and Go to `http://localhost:8000/` 	
+ `http://localhost:8000/` 	
 </ul>
 <h2 align="left">Technologies</h2>
   <ul>
     <div>
-      <p>HTML, CSS, JavaScript, JSON, Flask, SQLite
+      <p>HTML, CSS, JavaScript, Flask, SQLite
     </div>
     
    
