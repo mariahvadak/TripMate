@@ -23,7 +23,7 @@
   <li>Go to your repo and Pull updated code from main branch</li>  
 
 ```bash
-git pull origin <your-branch-name>
+git pull origin master
 ```
   <li>Run this command to install required packages</li>
 
@@ -38,7 +38,7 @@ python main.py
   <li>View The App</li>
 	<p></p>
 	
- Open browser and Go to `http://127.0.0.1:5000` 	
+ Open browser and Go to `http://localhost:8000/` 	
 </ul>
 <h2 align="left">Technologies</h2>
   <ul>
