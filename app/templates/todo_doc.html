@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %} To-do Doc {% endblock %}
+{% block container %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-VLG1/zNw1Ikbv/zw+ZPJSJtNn50Wc0NV2I9O4Pu4xC1GAI4wC49HeFnxIbgMkS7dDRaM5eOnBnaPH9X0at5pQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<title>To-do Doc</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		.text-page {
+			margin: 50px auto;
+			padding: 20px;
+			width: 80%;
+			height: 800px; /* Updated height */
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			line-height: 1.5;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+		.text-page:focus {
+			outline: none;
+		}
+        #bullets-btn {
+			background-color: #f1cfb4;
+			border: none;
+			color: #fff;
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+		#bullets-btn:hover {
+			background-color: #f1cfb4;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		document.getElementById("bold-btn").addEventListener("click", function() {
+			toggleFormatting("bold-btn", "bold");
+		});
+
+		document.getElementById("italic-btn").addEventListener("click", function() {
+			toggleFormatting("italic-btn", "italic");
+		});
+
+		document.getElementById("underline-btn").addEventListener("click", function() {
+			toggleFormatting("underline-btn", "underline");
+		});
+
+		document.getElementById("strikethrough-btn").addEventListener("click", function() {
+			toggleFormatting("strikethrough-btn", "strikethrough");
+		});
+
+		var bulletsBtn = document.getElementById("bullets-btn");
+		var textArea = document.querySelector(".text-page");
+
+		bulletsBtn.addEventListener("click", function() {
+			document.execCommand("insertUnorderedList", false, null);
+			textArea.focus();
+		});
+
+		var textArea = document.querySelector(".text-page");
+
+		function toggleFormatting(btnId, command) {
+			var btn = document.getElementById(btnId);
+			btn.classList.toggle("active");
+			document.execCommand(command, false, null);
+			textArea.focus();
+		}
+
+	</script>
+
+	<button id="bullets-btn">Bullets</button>
+
+	<div>
+		<button class="formatting-btn" id="bold-btn"><i class="fas fa-bold"></i></button>
+		<button class="formatting-btn" id="italic-btn"><i class="fas fa-italic"></i></button>
+		<button class="formatting-btn" id="underline-btn"><i class="fas fa-underline"></i></button>
+		<button class="formatting-btn" id="strikethrough-btn"><i class="fas fa-strikethrough"></i></button>
+	</div>
+
+	<div class="text-page" contenteditable="true">
+		Type your text here...
+	</div>
+    
+</body>
+</html>
+
+{% endblock %}

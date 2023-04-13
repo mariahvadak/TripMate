@@ -19,6 +19,9 @@
             width: 100%;
             margin: 20px auto;
         }
+        .navbar {
+            background-color: #f1cfb4 !important;
+        }
     
         .navbar-nav {
             display: flex;
@@ -26,16 +29,8 @@
             justify-content: space-between;
         }
         .navbar-nav .nav-item > a:hover {
-            background-color: #f8f9fa;
+            background-color: #f1cfb4;
             color: #cec386;
-        }
-    
-        .search-bar {
-            position: absolute;
-            top: 15px;
-            right: 0;
-            margin-top: 10px;
-            margin-right: 10px;
         }
 
         @media (min-width: 992px) {
@@ -59,17 +54,12 @@
                 right: 0;
                 left: auto;
                 overflow-y: scroll;
-                background-color: #f8f9fa;
+                background-color: #f1cfb4;
                 padding: 10px;
             }
             .navbar-collapse form {
                 width: 100%;
                 margin: 0 auto;
-            }
-            .search-bar {
-                position: relative;
-                margin-top: 10px;
-                margin-bottom: 10px;
             }
             /* Added to left-align collapsed menu items */
             .navbar-nav.mr-auto.justify-content-start {
@@ -78,14 +68,12 @@
             }
         }
     </style>    
-    
-    <!-- Sidebar -->  
-    
+        
     <!-- Main Menu -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
-            <img src="/static/images/logo.png" width="50" height="50">
-            <a class="navbar-brand" href="/"> TripMate</a>
+            <img src="/static/images/TranLogo.png" width="75" height="50">
+            <a class="navbar-brand" href="/"> TripMate </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -93,6 +81,9 @@
                 <ul class="navbar-nav mr-auto justify-content-start">
                     <li class="nav-item">
                         <a class="nav-link" href="/"> <span class="fas fa-home"></span> Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/to-do-lists/"> <span class="fas fa-home"></span> To-do Lists </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/login/"> <span class="fas fa-user"></span> Log in</a>
@@ -105,10 +96,7 @@
                     </li>
                     
                 </ul>
-                <form class="form-inline my-2 my-lg-0 search-bar d-flex">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
             </div>
         </div>
     </nav>     
