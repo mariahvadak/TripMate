@@ -9,16 +9,22 @@
         <title>To-Do List</title>
     </head>
 
+
     <style>
-        #to-do-list-options .css-button-gradient--3 {
-            margin-right: 25px;
-            margin-bottom: 20px;
+        .container {
+            padding: 30px 0px;
         }
-        .css-button-gradient--3 {
-            min-width: 130px;
-            height: 40px;
+        #to-do-list-options .css-button-gradient--2 {
+            margin-bottom: 40px;
+            margin-right: 20px;
+            height: 50px;
+            font-size: 14px;
+        }
+        .css-button-gradient--2 {
+            min-width: 120px;
+            max-width: 150px;
+            height: 30px;
             color: #fff;
-            padding: 5px 10px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -28,40 +34,45 @@
             border-radius: 5px;
             border: none;
             background-size: 120% auto;
-            background-image: linear-gradient(315deg, #3BA2A8 0%, #f1cfb4 75%);
+            background-color: #3BA2A8;
         }
-        .css-button-gradient--3:hover {
+        .css-button-gradient--2:hover {
             background-position: right center;
         }
-        .css-button-gradient--3:active {
+        .css-button-gradient--2:active {
             top: 2px;
         }
-
+    
         #to-do-lists {
-            list-style: none;
-            margin: 10;
-            padding: 10;
-            display: flex;
-            flex-wrap: wrap;
-            text-align: right;
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 1200px;
+        margin: 0 auto;
+        }
+
+        #to-do-list-options {
+        display: flex;
+        align-items: flex-start;
         }
 
         #to-do-lists li {
-            margin-bottom: 50px;
-            margin-right: 50px;
-            width: 150px;
-            text-align: center;
+        width: 16.66%;
+        text-align: center;
+        margin-bottom: 45px;
         }
-
+    
         #to-do-lists li div {
             position: relative;
         }
-
+    
         #to-do-lists li img {
             display: block;
             margin: 0 auto 10px;
         }
-
+    
         #to-do-lists li span {
             display: block;
             font-weight: bold;
@@ -70,28 +81,154 @@
             left: 0;
             right: 0;
         }
-
     </style>
-
     
-    <div id="to-do-list-options">
-        <button class="css-button-gradient--3" >Create New To-Do List</button>
-        <button class="css-button-gradient--3" >Edit Selected To-Do List</button>
-        <button class="css-button-gradient--3" >Delete Selected To-Do List</button>
-    </div>  
-
-    <br>
-
-    <ul id="to-do-lists" class = "justify-content-center">
-        {% for to_do_list in to_do_lists %}
-          <li>
-            <div>
-              <img src="/static/images/todolist_icon.png" width="50" height="50">
-              <span>{{ to_do_list }}</span>
+    <style>
+        .container {
+            padding: 30px 0px;
+        }
+        #to-do-list-options .css-button-gradient--2 {
+            margin-bottom: 40px;
+            margin-right: 20px;
+            height: 50px;
+            font-size: 14px;
+        }
+        .css-button-gradient--2 {
+            min-width: 120px;
+            max-width: 150px;
+            height: 30px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+            background-size: 120% auto;
+            background-color: #3BA2A8;
+        }
+        .css-button-gradient--2:hover {
+            background-position: right center;
+        }
+        .css-button-gradient--2:active {
+            top: 2px;
+        }
+    
+        #to-do-lists {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 1200px;
+        margin: 0 auto;
+        }
+    
+        #to-do-list-options {
+        display: flex;
+        align-items: flex-start;
+        margin-left: 110px;
+        }
+    
+        #to-do-lists li {
+        width: 16.66%;
+        text-align: center;
+        margin-bottom: 45px;
+        }
+    
+        #to-do-lists li div {
+            position: relative;
+        }
+    
+        #to-do-lists li img {
+            display: block;
+            margin: 0 auto 10px;
+        }
+    
+        #to-do-lists li span {
+            display: block;
+            font-weight: bold;
+            position: absolute;
+            bottom: 10;
+            left: 0;
+            right: 0;
+        }
+    </style>
+    
+    <div class="container">
+        <div class="row">
+          <div>
+            <div id="to-do-list-options">
+              <button id="create-list-btn" class="css-button-gradient--2">Create New To-Do List</button>
+              <button id="delete-list-btn" class="css-button-gradient--2">Delete Selected To-Do List</button>
             </div>
-          </li>
-        {% endfor %}
-    </ul>     
+          </div>
+          <div class="col-md-12">
+            <ul id="to-do-lists">
+              {% for to_do_list in to_do_lists %}
+              <li>
+                <div>
+                    <img src="https://img.icons8.com/ios/50/null/file--v1.png"/>
+                  <span>{{ to_do_list }}</span>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <br>
+      </div>       
+
+    <script>
+        // Wait for the document to be ready
+        $(document).ready(function() {
+            // Get references to the create and delete buttons
+            var createBtn = $('#create-list-btn');
+            var deleteBtn = $('#delete-list-btn');
+
+            // Add click event listener to the create button
+            createBtn.click(function() {
+                // Replace this with your code to create a new to-do list
+                console.log('Create requested');
+                window.location.href = "todo_doc.html";
+            });
+
+            // Add click event listener to the delete button
+            deleteBtn.click(function() {
+                // Replace this with your code to delete the selected to-do list
+                console.log('Delete requested');
+                // Find the selected list item
+                var selectedListItem = $('#to-do-lists li.selected');
+                
+                // Send an AJAX request to delete the selected to-do document
+                $.ajax({
+                    url: '/delete_todo',
+                    type: 'POST',
+                    data: { todo_id: selectedTodoId },
+                    
+                    success: function(response) {
+                        console.log('Successfully deleted to-do document');
+                    },
+                    error: function(error) {
+                        console.log('Error deleting to-do document: ' + error);
+                    }
+                });
+            });
+            
+            // Add click event listener to the list items
+            $('#to-do-lists li').click(function() {
+                // Remove the 'selected' class from all list items
+                $('#to-do-lists li').removeClass('selected');
+                
+                // Add the 'selected' class to the clicked list item
+                $(this).addClass('selected');
+            });
+
+        });
+
+    </script>
 
     <br>
 

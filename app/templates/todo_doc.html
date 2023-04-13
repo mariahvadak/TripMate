@@ -5,8 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-VLG1/zNw1Ikbv/zw+ZPJSJtNn50Wc0NV2I9O4Pu4xC1GAI4wC49HeFnxIbgMkS7dDRaM5eOnBnaPH9X0at5pQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 	<title>To-do Doc</title>
 	<style>
 		body {
@@ -27,65 +25,66 @@
 		.text-page:focus {
 			outline: none;
 		}
-        #bullets-btn {
+        .formatting-btn {
 			background-color: #f1cfb4;
 			border: none;
 			color: #fff;
 			padding: 10px 20px;
-			font-size: 16px;
+			font-size: 10px;
 			border-radius: 5px;
 			cursor: pointer;
 			transition: background-color 0.3s;
+			margin-right: 10px; /* add some margin between buttons */
 		}
-		#bullets-btn:hover {
-			background-color: #f1cfb4;
+
+		.formatting-btn:hover {
+			background-color: #ff9b71;
 		}
 	</style>
 </head>
 <body>
 	<script>
 		document.getElementById("bold-btn").addEventListener("click", function() {
-			toggleFormatting("bold-btn", "bold");
+		  toggleFormatting("bold-btn", "bold");
 		});
-
+	  
 		document.getElementById("italic-btn").addEventListener("click", function() {
-			toggleFormatting("italic-btn", "italic");
+		  toggleFormatting("italic-btn", "italic");
 		});
-
+	  
 		document.getElementById("underline-btn").addEventListener("click", function() {
-			toggleFormatting("underline-btn", "underline");
+		  toggleFormatting("underline-btn", "underline");
 		});
-
+	  
 		document.getElementById("strikethrough-btn").addEventListener("click", function() {
-			toggleFormatting("strikethrough-btn", "strikethrough");
+		  toggleFormatting("strikethrough-btn", "strikethrough");
 		});
-
-		var bulletsBtn = document.getElementById("bullets-btn");
-		var textArea = document.querySelector(".text-page");
-
-		bulletsBtn.addEventListener("click", function() {
-			document.execCommand("insertUnorderedList", false, null);
-			textArea.focus();
+	  
+		document.getElementById("bullet-btn").addEventListener("click", function() {
+		  toggleFormatting("bullet-btn", "insertUnorderedList");
 		});
-
+	  
+		document.getElementById("number-btn").addEventListener("click", function() {
+		  toggleFormatting("number-btn", "insertOrderedList");
+		});
+	  
 		var textArea = document.querySelector(".text-page");
-
+	  
 		function toggleFormatting(btnId, command) {
-			var btn = document.getElementById(btnId);
-			btn.classList.toggle("active");
-			document.execCommand(command, false, null);
-			textArea.focus();
+		  var btn = document.getElementById(btnId);
+		  btn.classList.toggle("active");
+		  document.execCommand(command, false, null);
+		  textArea.focus();
 		}
-
-	</script>
-
-	<button id="bullets-btn">Bullets</button>
+	  </script>	  
 
 	<div>
-		<button class="formatting-btn" id="bold-btn"><i class="fas fa-bold"></i></button>
-		<button class="formatting-btn" id="italic-btn"><i class="fas fa-italic"></i></button>
-		<button class="formatting-btn" id="underline-btn"><i class="fas fa-underline"></i></button>
-		<button class="formatting-btn" id="strikethrough-btn"><i class="fas fa-strikethrough"></i></button>
+		<button class="formatting-btn" id="bold-btn"><img src="https://img.icons8.com/metro/15/null/bold.png"/></button>
+		<button class="formatting-btn" id="italic-btn"><img src="https://img.icons8.com/metro/15/null/italic.png"/></button>
+		<button class="formatting-btn" id="underline-btn"><img src="https://img.icons8.com/android/15/null/underline.png"/></button>
+		<button class="formatting-btn" id="strikethrough-btn"><img src="https://img.icons8.com/fluency-systems-filled/15/null/strikethrough.png"/></button>
+		<button class="formatting-btn" id="bullet-btn"><img src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/15/null/external-bullets-text-editor-inkubators-detailed-outline-inkubators.png"/></button>
+		<button class="formatting-btn" id="number-btn"><img src="https://img.icons8.com/ios-glyphs/15/null/numbered-list.png"/></button>
 	</div>
 
 	<div class="text-page" contenteditable="true">
