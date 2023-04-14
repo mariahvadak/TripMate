@@ -20,7 +20,7 @@
 }
 
 body{
-	background: #f5f6fa;
+	background: white;
 }
 
 .wrapper .sidebar{
@@ -99,7 +99,7 @@ body{
 }
 
 .wrapper .section .top_navbar{
-	background:#EDC6B1 ;
+	background:white ;
 	height: 50px;
 	display: flex;
 	align-items: center;
@@ -109,11 +109,11 @@ body{
 
 .wrapper .section .top_navbar .hamburger a{
 	font-size: 28px;
-	color: #f4fbff;
+	color: #a2ecff;
 }
 
 .wrapper .section .top_navbar .hamburger a:hover{
-	color: #a2ecff;
+	color: pink;
 }
 
  
@@ -147,6 +147,7 @@ justify-content: center;
 
 
 
+
     </style>
 </head>
 <body>
@@ -154,10 +155,16 @@ justify-content: center;
     <div class="wrapper">
         <div class="section">
             <div class="top_navbar">
+               
                 <div class="hamburger">
                     <a href="#">
                         <i class="fas fa-bars"></i>
                     </a>
+                </div>
+
+                <div>
+                    <h1>TripMate </h1>
+                    
                 </div>
             </div>
              
@@ -165,8 +172,8 @@ justify-content: center;
         <div class="sidebar">
             
             <div class="profile">
-                <img src="https://cdn.discordapp.com/attachments/1075201364214419560/1086491040908857344/logo_transparent.png">
-                <h3>TripMate</h3>
+                <img src="https://github.com/mariahjv/Software-Engineering-Project/raw/main/app/static/images/hi.gif">
+                <h3>LAMT</h3>
                 
             </div>
             <ul>
@@ -217,6 +224,16 @@ justify-content: center;
         <h2> Calender&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To-do List</h2>
     </div>
 
+    <center>
+        <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> 
+        <footer id="footer">
+            <small>
+                Contact us for support at <a href="mailto://...@ou.edu">TripMate@ou.edu </a> (we probably won't answer)<br>
+                Copyright &copy; 2023 Team LAMT at OU
+            </small>
+        </footer>
+    </center>
+
 
   <script>
        var hamburger = document.querySelector(".hamburger");
@@ -224,5 +241,9 @@ justify-content: center;
 		document.querySelector("body").classList.toggle("active");
 	})
   </script>
+
+  
 </body>
+
+
 </html>
