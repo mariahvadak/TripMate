@@ -14,7 +14,7 @@
 		.text-page {
 			margin: 50px auto;
 			padding: 20px;
-			width: 80%;
+			width: 70%;
 			height: 800px; /* Updated height */
 			background-color: #fff;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -25,8 +25,9 @@
 		.text-page:focus {
 			outline: none;
 		}
+
         .formatting-btn {
-			background-color: #f1cfb4;
+			background-color: #3BA2A8;
 			border: none;
 			color: #fff;
 			padding: 10px 20px;
@@ -36,59 +37,80 @@
 			transition: background-color 0.3s;
 			margin-right: 10px; /* add some margin between buttons */
 		}
-
+		.formatting-btn img {
+  			filter: invert(1);
+		}
 		.formatting-btn:hover {
-			background-color: #ff9b71;
+			background-color: #318b8f;
 		}
 	</style>
 </head>
 <body>
 	<script>
 		document.getElementById("bold-btn").addEventListener("click", function() {
-		  toggleFormatting("bold-btn", "bold");
+			toggleFormatting("bold-btn", "bold");
 		});
-	  
+
 		document.getElementById("italic-btn").addEventListener("click", function() {
-		  toggleFormatting("italic-btn", "italic");
+			toggleFormatting("italic-btn", "italic");
 		});
-	  
+
 		document.getElementById("underline-btn").addEventListener("click", function() {
-		  toggleFormatting("underline-btn", "underline");
+			toggleFormatting("underline-btn", "underline");
 		});
-	  
+
 		document.getElementById("strikethrough-btn").addEventListener("click", function() {
-		  toggleFormatting("strikethrough-btn", "strikethrough");
+			toggleFormatting("strikethrough-btn", "strikethrough");
 		});
-	  
-		document.getElementById("bullet-btn").addEventListener("click", function() {
-		  toggleFormatting("bullet-btn", "insertUnorderedList");
-		});
-	  
-		document.getElementById("number-btn").addEventListener("click", function() {
-		  toggleFormatting("number-btn", "insertOrderedList");
-		});
-	  
+
+		var bulletsBtn = document.getElementById("bullets-btn");
 		var textArea = document.querySelector(".text-page");
-	  
+
+		bulletsBtn.addEventListener("click", function() {
+			document.execCommand("insertUnorderedList", false, null);
+			textArea.focus();
+		});
+
+		var textArea = document.querySelector(".text-page");
+
 		function toggleFormatting(btnId, command) {
-		  var btn = document.getElementById(btnId);
-		  btn.classList.toggle("active");
-		  document.execCommand(command, false, null);
-		  textArea.focus();
+			var btn = document.getElementById(btnId);
+			btn.classList.toggle("active");
+			document.execCommand(command, false, null);
+			textArea.focus();
+
+			// Get the user's username from the server
+			var username = "{{ username }}";
+
+			// Construct the URL for the new page
+			var newPageUrl = "/todo/" + username + "/" + Date.now();
+
+			// Add click event listener to the create button
+			createBtn.click(function() {
+				// Redirect the user to the new page
+				window.location.href = newPageUrl;
+			});
+
+			// Add click event listener to the delete button
+			deleteBtn.click(function() {
+				// Replace this with your code to delete the selected to-do list
+				console.log('Delete requested');
+			});
 		}
-	  </script>	  
+
+	</script>
 
 	<div>
 		<button class="formatting-btn" id="bold-btn"><img src="https://img.icons8.com/metro/15/null/bold.png"/></button>
 		<button class="formatting-btn" id="italic-btn"><img src="https://img.icons8.com/metro/15/null/italic.png"/></button>
 		<button class="formatting-btn" id="underline-btn"><img src="https://img.icons8.com/android/15/null/underline.png"/></button>
-		<button class="formatting-btn" id="strikethrough-btn"><img src="https://img.icons8.com/fluency-systems-filled/15/null/strikethrough.png"/></button>
+		<button class="formatting-btn" id="strikethrough-btn"><img src="https://img.icons8.com/fluency-systems-filled/15/000000/strikethrough.png"/></button>
 		<button class="formatting-btn" id="bullet-btn"><img src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/15/null/external-bullets-text-editor-inkubators-detailed-outline-inkubators.png"/></button>
-		<button class="formatting-btn" id="number-btn"><img src="https://img.icons8.com/ios-glyphs/15/null/numbered-list.png"/></button>
+		<button class="formatting-btn" id="number-btn"><img src="https://img.icons8.com/ios/15/null/numbered-list.png"/></button>
 	</div>
 
 	<div class="text-page" contenteditable="true">
-		Type your text here...
+		Start your to-do list...
 	</div>
     
 </body>

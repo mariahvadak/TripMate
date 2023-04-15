@@ -20,17 +20,24 @@
             margin: 20px auto;
         }
         .navbar {
-            background-color: #f1cfb4 !important;
+            background-color: #3BA2A8 !important;
         }
-    
+        .navbar-brand {
+            color: white;
+        }
+        .navbar-nav .nav-link .fas,
+        .navbar-nav .nav-link .fa,
+        .navbar-nav .nav-link {
+            color: white;
+        }
         .navbar-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         .navbar-nav .nav-item > a:hover {
-            background-color: #f1cfb4;
-            color: #cec386;
+            background-color: #3BA2A8;
+            color: #f1cfb4;
         }
 
         @media (min-width: 992px) {
@@ -54,8 +61,11 @@
                 right: 0;
                 left: auto;
                 overflow-y: scroll;
-                background-color: #f1cfb4;
+                background-color: #3BA2A8;
                 padding: 10px;
+            }
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='6' x2='30' y2='6' stroke='white' stroke-width='2'/%3E%3Cline x1='0' y1='15' x2='30' y2='15' stroke='white' stroke-width='2'/%3E%3Cline x1='0' y1='24' x2='30' y2='24' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
             }
             .navbar-collapse form {
                 width: 100%;
@@ -73,6 +83,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
             <img src="/static/images/TranLogo.png" width="75" height="50">
+            <br>
             <a class="navbar-brand" href="/"> TripMate </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -86,15 +97,10 @@
                         <a class="nav-link" href="/to-do-lists/"> <span class="fas fa-home"></span> To-do Lists </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login/"> <span class="fas fa-user"></span> Log in</a>
+                        <a class="nav-link" href="/"> <span class="fa fa-calendar"></span> Calendar </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/signup/"> <span class="fas fa-user"></span> Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/"> <span class="fas fa-ban"></span> Log out</a>
-                    </li>
-                    
+                        <a class="nav-link" href="/"> <span class="fas fa-cog"></span> Settings </a>                    
                 </ul>
 
             </div>
