@@ -13,6 +13,10 @@
 
     <!-- dashboard -->
     <style>
+        .title-container {
+            position: relative;
+            left: 35px;
+        }
         .container {
             padding: 30px 0px;
         }
@@ -123,7 +127,9 @@
     </style>
 
     <body>
-        <h1>To-Do Lists</h1>
+        <div class="title-container">
+            <h2>To-Do Lists</h2>
+        </div>
 
         <div id="dashboard-section">
             <div class="container">
@@ -146,9 +152,9 @@
                                     <li data-id="{{ todo.id }}">
                                         <div class="todo-item">
                                             <img src="/static/images/todolist_icon.png" width="50" height="50">
-                                            <h3>
+                                            <h5>
                                                 <a href="{{ url_for('views.edit_todo_list', todo_id=todo.id) }}">{{ todo.title }}</a>
-                                            </h3>
+                                            </h5>
                                         </div>
                                     </li>
                                 {% endfor %}
@@ -165,46 +171,68 @@
     <script>
         // Wait for the document to be ready
         $(document).ready(function() {
-        // Get references to the create and delete buttons
-        var createBtn = $('#create-list-btn');
-        var deleteBtn = $('#delete-list-btn');
+            // Get references to the create and delete buttons
+            var createBtn = $('#create-list-btn');
+            var deleteBtn = $('#delete-list-btn');
 
-        // Get the create button element
-        const createButton = document.getElementById('create-list-btn');
-        createButton.addEventListener('click', function() {
-            // Show the input field and the submit button
-            $('#list-name-input-container').show();
+            // Get the create button element
+            const createButton = document.getElementById('create-list-btn');
+            createButton.addEventListener('click', function() {
+                // Show the input field and the submit button
+                $('#list-name-input-container').show();
 
-            // Get the submit button element
-            const submitButton = document.getElementById('submit-list-name-btn');
-            submitButton.addEventListener('click', function() {
-                // Get the value of the input element
-                const listName = document.getElementById('list-name-input').value;
+                // Get the submit button element
+                const submitButton = document.getElementById('submit-list-name-btn');
+                submitButton.addEventListener('click', function() {
+                    // Get the value of the input element
+                    const listName = document.getElementById('list-name-input').value;
 
-                // Call a function to create a new todo list with the specified name
-                createNewTodoList(listName);
+                    // Call a function to create a new todo list with the specified name
+                    createNewTodoList(listName);
+                });
             });
-        });
 
-        // Function to create a new todo list
-        function createNewTodoList(title) {
-            fetch('/todolists/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                // Get the ID of the newly created todo list
-                const newTodoListId = data.id;
+            // Function to create a new todo list
+            function createNewTodoList(title) {
+                fetch('/todolists/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ title }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Get the ID of the newly created todo list
+                    const newTodoListId = data.id;
 
-                // Redirect the user to the URL of the new todo list
-                window.location.href = `/todolists/${newTodoListId}`;
+                    // Redirect the user to the URL of the new todo list
+                    window.location.href = `/todolists/${newTodoListId}`;
+                });
+            }
+
+            // Add an event listener for the click event on the delete button
+            deleteBtn.on('click', function(event) {
+                // Prevent the default behavior of the click event
+                event.preventDefault();
+
+                // Get the ID of the to-do list to delete from the data attribute of the button
+                var todoId = deleteBtn.data('id');
+
+                // Send an AJAX request to the server to delete the to-do list
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/todolists/' + todoId,
+                    success: function(response) {
+                        // Redirect the user to the to-do list dashboard
+                        window.location.href = '/todolists/';
+                    },
+                    error: function(response) {
+                        // Handle the error response
+                        console.error(response);
+                    }
+                });
             });
-        }
-
 
         });
     </script>
