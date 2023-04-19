@@ -12,9 +12,12 @@
 			background-color: #f2f2f2;
 		}
 		.text-page {
+			text-indent: 4.5em; 
+  			margin-left: 4.5em; /* should be the same as text-indent */
 			margin: 30px auto;
 			margin-right: 190px;
 			padding: 20px;
+			padding-left: 20px;
 			width: 70%;
 			height: 800px; /* Updated height */
 			background-color: #fff;
@@ -48,62 +51,18 @@
 		.formatting-btn:hover {
 			background-color: #318b8f;
 		}
+		ul {
+			list-style-position: inside; 
+  			margin-right: 1px; /* adjust this value to change the distance between the bullet and the text */
+		}
+
+		ol {
+			list-style-position: inside; 
+			margin-left: 1px;
+		}
 	</style>
 </head>
 <body>
-	<script>
-		document.getElementById("bold-btn").addEventListener("click", function() {
-			toggleFormatting("bold-btn", "bold");
-		});
-
-		document.getElementById("italic-btn").addEventListener("click", function() {
-			toggleFormatting("italic-btn", "italic");
-		});
-
-		document.getElementById("underline-btn").addEventListener("click", function() {
-			toggleFormatting("underline-btn", "underline");
-		});
-
-		document.getElementById("strikethrough-btn").addEventListener("click", function() {
-			toggleFormatting("strikethrough-btn", "strikethrough");
-		});
-
-		var bulletsBtn = document.getElementById("bullets-btn");
-		var textArea = document.querySelector(".text-page");
-
-		bulletsBtn.addEventListener("click", function() {
-			document.execCommand("insertUnorderedList", false, null);
-			textArea.focus();
-		});
-
-		var textArea = document.querySelector(".text-page");
-
-		function toggleFormatting(btnId, command) {
-			var btn = document.getElementById(btnId);
-			btn.classList.toggle("active");
-			document.execCommand(command, false, null);
-			textArea.focus();
-
-			// Get the user's username from the server
-			var username = "{{ username }}";
-
-			// Construct the URL for the new page
-			var newPageUrl = "/todo/" + username + "/" + Date.now();
-
-			// Add click event listener to the create button
-			createBtn.click(function() {
-				// Redirect the user to the new page
-				window.location.href = newPageUrl;
-			});
-
-			// Add click event listener to the delete button
-			deleteBtn.click(function() {
-				// Replace this with your code to delete the selected to-do list
-				console.log('Delete requested');
-			});
-		}
-
-	</script>
 
 	<div class="btns">
 		<button class="formatting-btn" id="bold-btn"><img src="https://img.icons8.com/metro/15/null/bold.png"/></button>
@@ -114,9 +73,44 @@
 		<button class="formatting-btn" id="number-btn"><img src="https://img.icons8.com/ios/15/null/numbered-list.png"/></button>
 	</div>
 
-	<div class="text-page" contenteditable="true">
+	<div class="text-page" contenteditable="true" id="todo-textarea">
 		Start your to-do list...
-	</div>
+	</div>		  
+
+	<script>
+		const textArea = document.getElementById('todo-textarea');
+
+		const boldBtn = document.getElementById('bold-btn');
+		boldBtn.addEventListener('click', () => {
+			document.execCommand('bold', false, null);
+		});
+
+		const italicBtn = document.getElementById('italic-btn');
+		italicBtn.addEventListener('click', () => {
+			document.execCommand('italic', false, null);
+		});
+
+		const underlineBtn = document.getElementById('underline-btn');
+		underlineBtn.addEventListener('click', () => {
+			document.execCommand('underline', false, null);
+		});
+
+		const strikethroughBtn = document.getElementById('strikethrough-btn');
+		strikethroughBtn.addEventListener('click', () => {
+			document.execCommand('strikethrough', false, null);
+		});
+
+		const bulletBtn = document.getElementById('bullet-btn');
+		bulletBtn.addEventListener('click', () => {
+			document.execCommand('insertUnorderedList', false, null);
+		});
+
+		const numberBtn = document.getElementById('number-btn');
+		numberBtn.addEventListener('click', () => {
+			document.execCommand('insertOrderedList', false, null);
+		});
+
+	</script>
     
 </body>
 </html>

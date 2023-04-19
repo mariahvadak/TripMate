@@ -205,38 +205,6 @@
             });
         }
 
-            // Add click event listener to the delete button
-            deleteBtn.click(function() {
-                // Find the selected list item
-                var selectedListItem = $('#to-do-lists li.selected');
-
-                if (selectedListItem.length === 0) {
-                    // If no list item is selected, display an error message
-                    alert('Please select a to-do list to delete');
-                    return;
-                }
-
-                // Get the ID of the selected todo list
-                var selectedTodoId = selectedListItem.data('id');
-
-                // Send an AJAX request to delete the selected to-do document
-                $.ajax({
-                    url: '/delete_todo',
-                    type: 'POST',
-                    data: { todo_id: selectedTodoId },
-
-                    success: function(response) {
-                        console.log('Successfully deleted to-do document');
-                        // Remove the selected list item from the page
-                        selectedListItem.remove();
-                        // Redirect the user back to the dashboard page
-                        window.location.href = "/to-do-list/";
-                    },
-                    error: function(error) {
-                        console.log('Error deleting to-do document: ' + error);
-                    }
-                });
-            });
 
         });
     </script>
