@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <meta charset="UTF-8">
         <title>To-Do List</title>
     </head>
@@ -120,153 +122,124 @@
 		}
     </style>
 
-    <div id="dashboard-section">
-        <div class="container">
-            <div class="row">
-                <div>
-                    <div id="to-do-list-options">
-                        <button id="create-list-btn" class="css-button-gradient--2">Create New To-Do List</button>
-                        <button id="delete-list-btn" class="css-button-gradient--2">Delete Selected To-Do List</button>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <ul id="to-do-lists">
-                        {% for todo in to_do_lists %}
-                        <li data-id="{{ todo.id }}">
-                            <div class="todo-item">
-                                <img src="/static/images/todolist_icon.png" width="50" height="50">
-                                <h3><a href="/edit/{{ todo.id }}">{{ todo.title }}</a></h3>
-                                <p>Due Date: {{ todo.due_date }}</p>
+    <body>
+        <h1>To-Do Lists</h1>
+
+        <div id="dashboard-section">
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <div id="to-do-list-options">
+                            <button id="create-list-btn" class="css-button-gradient--2">Create New To-Do List</button>
+                            <button id="delete-list-btn" class="css-button-gradient--2">Delete Selected To-Do List</button>
+
+                            <div id="list-name-input-container" style="display: none;">
+                              <input type="text" id="list-name-input" placeholder="Enter the name of your new list">
+                              <button id="submit-list-name-btn" class="css-button-gradient--2">Submit</button>
                             </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                        </div>                          
+                    </div>
+                    <div class="col-md-12">
+                        <ul id="to-do-lists">
+                            {% if to_do_lists %}
+                                {% for todo in to_do_lists %}
+                                    <li data-id="{{ todo.id }}">
+                                        <div class="todo-item">
+                                            <img src="/static/images/todolist_icon.png" width="50" height="50">
+                                            <h3>
+                                                <a href="{{ url_for('views.edit_todo_list', todo_id=todo.id) }}">{{ todo.title }}</a>
+                                            </h3>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <p>No to-do lists found.</p>
+                            {% endif %}
+                        </ul>
+                    </div>                    
                 </div>
             </div>
-            <br>
         </div>
+    </body>
         
-        <script>
-            // Wait for the document to be ready
-            $(document).ready(function() {
-                // Get references to the create and delete buttons
-                var createBtn = $('#create-list-btn');
-                var deleteBtn = $('#delete-list-btn');
+    <script>
+        // Wait for the document to be ready
+        $(document).ready(function() {
+        // Get references to the create and delete buttons
+        var createBtn = $('#create-list-btn');
+        var deleteBtn = $('#delete-list-btn');
 
-                // Add click event listener to the create button
-                createBtn.click(function() {
-                    // Redirect the user to the new todo list page
-                    window.location.href = "/create_todo";
-                });
+        // Get the create button element
+        const createButton = document.getElementById('create-list-btn');
+        createButton.addEventListener('click', function() {
+            // Show the input field and the submit button
+            $('#list-name-input-container').show();
 
-                // Add click event listener to the delete button
-                deleteBtn.click(function() {
-                    // Find the selected list item
-                    var selectedListItem = $('#to-do-lists li.selected');
+            // Get the submit button element
+            const submitButton = document.getElementById('submit-list-name-btn');
+            submitButton.addEventListener('click', function() {
+                // Get the value of the input element
+                const listName = document.getElementById('list-name-input').value;
 
-                    if (selectedListItem.length === 0) {
-                        // If no list item is selected, display an error message
-                        alert('Please select a to-do list to delete');
-                        return;
+                // Call a function to create a new todo list with the specified name
+                createNewTodoList(listName);
+            });
+        });
+
+        // Function to create a new todo list
+        function createNewTodoList(title) {
+            fetch('/todolists/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // Get the ID of the newly created todo list
+                const newTodoListId = data.id;
+
+                // Redirect the user to the URL of the new todo list
+                window.location.href = `/todolists/${newTodoListId}`;
+            });
+        }
+
+            // Add click event listener to the delete button
+            deleteBtn.click(function() {
+                // Find the selected list item
+                var selectedListItem = $('#to-do-lists li.selected');
+
+                if (selectedListItem.length === 0) {
+                    // If no list item is selected, display an error message
+                    alert('Please select a to-do list to delete');
+                    return;
+                }
+
+                // Get the ID of the selected todo list
+                var selectedTodoId = selectedListItem.data('id');
+
+                // Send an AJAX request to delete the selected to-do document
+                $.ajax({
+                    url: '/delete_todo',
+                    type: 'POST',
+                    data: { todo_id: selectedTodoId },
+
+                    success: function(response) {
+                        console.log('Successfully deleted to-do document');
+                        // Remove the selected list item from the page
+                        selectedListItem.remove();
+                        // Redirect the user back to the dashboard page
+                        window.location.href = "/to-do-list/";
+                    },
+                    error: function(error) {
+                        console.log('Error deleting to-do document: ' + error);
                     }
-
-                    // Get the ID of the selected todo list
-                    var selectedTodoId = selectedListItem.data('id');
-
-                    // Send an AJAX request to delete the selected to-do document
-                    $.ajax({
-                        url: '/delete_todo',
-                        type: 'POST',
-                        data: { todo_id: selectedTodoId },
-
-                        success: function(response) {
-                            console.log('Successfully deleted to-do document');
-                            // Remove the selected list item from the page
-                            selectedListItem.remove();
-                            // Redirect the user back to the dashboard page
-                            window.location.href = "/to-do-list/";
-                        },
-                        error: function(error) {
-                            console.log('Error deleting to-do document: ' + error);
-                        }
-                    });
-                });
-
-                // Add click event listener to the list items
-                $('#to-do-lists li').click(function() {
-                    // Remove the 'selected' class from all list items
-                    $('#to-do-lists li').removeClass('selected');
-
-                    // Add the 'selected' class to the clicked list item
-                    $(this).addClass('selected');
-
-                    // Get the ID of the clicked todo list
-                    var todoId = $(this).data('id');
-
-                    // Redirect the user to the edit page for the selected todo list
-                    window.location.href = "/to-do-list/" + todoId;
-                });
-
-                // Add click event listener to the back button on the edit page
-                $('#back-btn').click(function() {
-                    // Redirect the user back to the dashboard page
-                    window.location.href = "/to-do-list/";
                 });
             });
-        </script>
-    </div>
 
-    <div id="edit-section" style="display: none;">
-        <script>
-            document.getElementById("bold-btn").addEventListener("click", function() {
-            toggleFormatting("bold-btn", "bold");
-            });
-        
-            document.getElementById("italic-btn").addEventListener("click", function() {
-            toggleFormatting("italic-btn", "italic");
-            });
-        
-            document.getElementById("underline-btn").addEventListener("click", function() {
-            toggleFormatting("underline-btn", "underline");
-            });
-        
-            document.getElementById("strikethrough-btn").addEventListener("click", function() {
-            toggleFormatting("strikethrough-btn", "strikethrough");
-            });
-        
-            document.getElementById("bullet-btn").addEventListener("click", function() {
-            toggleFormatting("bullet-btn", "insertUnorderedList");
-            });
-        
-            document.getElementById("number-btn").addEventListener("click", function() {
-            toggleFormatting("number-btn", "insertOrderedList");
-            });
-        
-            var textArea = document.querySelector(".text-page");
-        
-            function toggleFormatting(btnId, command) {
-            var btn = document.getElementById(btnId);
-            btn.classList.toggle("active");
-            document.execCommand(command, false, null);
-            textArea.focus();
-            }
-        </script>	  
-
-        <div>
-            <button class="formatting-btn" id="bold-btn"><img src="https://img.icons8.com/metro/15/null/bold.png"/></button>
-            <button class="formatting-btn" id="italic-btn"><img src="https://img.icons8.com/metro/15/null/italic.png"/></button>
-            <button class="formatting-btn" id="underline-btn"><img src="https://img.icons8.com/android/15/null/underline.png"/></button>
-            <button class="formatting-btn" id="strikethrough-btn"><img src="https://img.icons8.com/fluency-systems-filled/15/null/strikethrough.png"/></button>
-            <button class="formatting-btn" id="bullet-btn"><img src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/15/null/external-bullets-text-editor-inkubators-detailed-outline-inkubators.png"/></button>
-            <button class="formatting-btn" id="number-btn"><img src="https://img.icons8.com/ios-glyphs/15/null/numbered-list.png"/></button>
-        </div>
-
-        <div class="text-page" contenteditable="true">
-            Type your text here...
-        </div>
-    </div>    
-
-    <br>
+        });
+    </script>
 
     <center>
         <footer id="footer">
