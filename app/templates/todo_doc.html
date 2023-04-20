@@ -1,118 +1,166 @@
 {% extends "base.html" %}
-{% block title %} To-do Doc {% endblock %}
+{% block title %} {{to_do_list.title}} {% endblock %}
 {% block container %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css" integrity="sha512-YdYyWQf8AS4WSB0WWdc3FbQ3Ypdm0QCWD2k4hgfqbQbRCJBEgX0iAegkl2S1Evma5ImaVXLBeUkIlP6hQ1eYKQ==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>To-do Doc</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f2f2f2;
-		}
-		.text-page {
-			text-indent: 4.5em; 
-  			margin-left: 4.5em; /* should be the same as text-indent */
-			margin: 30px auto;
-			margin-right: 190px;
-			padding: 20px;
-			padding-left: 20px;
-			width: 70%;
-			height: 800px; /* Updated height */
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			line-height: 1.5;
-			white-space: pre-wrap;
-			word-wrap: break-word;
-		}
-		.text-page:focus {
-			outline: none;
-		}
+<style>
+	h1{
+		padding: 20px 60px;
+	}
+	.container {
+		padding: 20px 60px;
+		min-width: 400px;
+	}
+	to-do-table {
+		min-width: 500px;
+	}
 
-		.btns {
-			margin-top: 20px;
-			margin-left: 235px;
-		}
-        .formatting-btn {
-			background-color: #3BA2A8;
-			border: none;
-			color: #fff;
-			padding: 10px 20px;
-			font-size: 10px;
-			border-radius: 5px;
-			cursor: pointer;
-			transition: background-color 0.3s;
-			margin-right: 10px; /* add some margin between buttons */
-		}
-		.formatting-btn img {
-  			filter: invert(1);
-		}
-		.formatting-btn:hover {
-			background-color: #318b8f;
-		}
-		ul {
-			list-style-position: inside; 
-  			margin-right: 1px; /* adjust this value to change the distance between the bullet and the text */
-		}
+	tr{
+		border: #3BA2A8;
+	}
+	tr:hover{
+		background-color:#eaf3f4
+	}
+	td {
+		height: 60px;
+	}
+	.css-button-gradient--2 {
+		max-width: 170px;
+		height: 50px;
+		width: 100px;
+		color: #fff;
+		font-weight: bold;
+		font-size: 30px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		position: relative;
+		display: inline-block;
+		outline: none;
+		border-radius: 5px;
+		border: none;
+		background-size: 120% auto;
+		background-color: #3BA2A8;
+	}
+	.css-button-gradient--2:hover {
+		background-position: right center;
+	}
+	.css-button-gradient--2:active {
+		top: 2px;
+	}
+	i {
+		color: #3BA2A8;
+		font-size: 25px;
+	}
+	#text{
+		height: 50px !important;
+		border: solid 2px #3BA2A8;
+		border-radius: 5px;
+		background-color: #f2f2f2;
+	}
 
-		ol {
-			list-style-position: inside; 
-			margin-left: 1px;
-		}
-	</style>
-</head>
-<body>
+	#text: after{
+		border: solid 2px #3BA2A8;
+		border-radius: 5px;
+		background-color: #f2f2f2;
+	}
 
-	<div class="btns">
-		<button class="formatting-btn" id="bold-btn"><img src="https://img.icons8.com/metro/15/null/bold.png"/></button>
-		<button class="formatting-btn" id="italic-btn"><img src="https://img.icons8.com/metro/15/null/italic.png"/></button>
-		<button class="formatting-btn" id="underline-btn"><img src="https://img.icons8.com/android/15/null/underline.png"/></button>
-		<button class="formatting-btn" id="strikethrough-btn"><img src="https://img.icons8.com/fluency-systems-filled/15/000000/strikethrough.png"/></button>
-		<button class="formatting-btn" id="bullet-btn"><img src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/15/null/external-bullets-text-editor-inkubators-detailed-outline-inkubators.png"/></button>
-		<button class="formatting-btn" id="number-btn"><img src="https://img.icons8.com/ios/15/null/numbered-list.png"/></button>
+	.form-check-input{
+		background-color:#f2f2f2;
+		border: solid #3BA2A8;
+		padding:0;
+		height:20px;
+		width: 20px;
+	}
+	.form-check-input:checked {
+		background-color: #3BA2A8;
+		border-color: #3BA2A8;
+	}
+
+	
+	.done {
+		color: gray;
+		text-decoration: black line-through;
+	}
+	
+	#date-btn {
+		font-size:36px;
+		color:  #3BA2A8;
+	}
+
+	#datepicker {
+		height: 50px;
+		width: 150px;
+		border: solid 2px #3BA2A8;
+		border-radius: 5px;
+		background-color: #f2f2f2;
+		font-size: 20px;
+		font-color: #3BA2A8;
+		padding: 5px
+	}
+	
+</style>
+	
+<h1 class="mx-5 my-2"><b>{{to_do_list.title}}</b></h1>
+<form method="POST">
+	<div class="row row-cols-2 mx-5 my-3 justify-content-center" id="list-name-input-container" >
+		<div class="col-6" style="padding-left: 0" >
+			<input type="text" id="text" class="form-control" name="text" placeholder="Enter a new task">
+		</div>   
+		<div class="col-1">     
+			<input type="date" id="datepicker" name="datepicker" placeholder="Due date" class="p-0">         
+		</div> 
+		<div class="col-1" style="margin-left:60px">
+			<button type="submmit" id="add-list-btn" class="css-button-gradient--2 fas fa-plus"></button>                      
+		</div>
 	</div>
-
-	<div class="text-page" contenteditable="true" id="todo-textarea">
-		Start your to-do list...
-	</div>		  
-
-	<script>
-		const textArea = document.getElementById('todo-textarea');
-
-		const boldBtn = document.getElementById('bold-btn');
-		boldBtn.addEventListener('click', () => {
-			document.execCommand('bold', false, null);
+<form>
+<div class="container">
+	{% if tasks|length > 0 %}
+	<table id="to-do-table" class="table table-hover" style="table-layout: fixed ; width: 100%; ">
+		<tr class="text-center" id="table-header">
+			<th style="width: 10%; background-color:#3BA2A8; color:white;"><strong>Done</strong></th>
+			<th style="width: 45%; background-color:#3BA2A8; color:white;"><strong>Task Name</strong></th>
+			<th style="width: 25%; background-color:#3BA2A8; color:white;"><strong>Date</strong></th>
+			<th style="width: 10%; background-color:#3BA2A8; color:white;"><strong>Remove</strong></th>
+		</tr>
+		{% for task in tasks %}
+			{% if task.complete == False %}
+			<tr id="task-{{task.id}}" class="text-center">
+				<td id="complete">
+					<a  href="/update/{{to_do_list.title}}/{{task.id}}/"><i class="fa fa-square-o" name="complete" id="complete" style="font-size:35px"></i></a>
+				</td>
+				<td id="task-name">{{task.text}}</td>
+			{% else %}
+			<tr id="task-{{task.id}}" class="text-center done">
+				<td id="complete">
+					<i class="fa fa-check-square-o" value="True" id="complete" name="complete" style="font-size:35px"></i></a>
+				</td>
+				<td id="task-name"><s>{{task.text}}</s></td>
+			{% endif %}
+            <td id="date">{{task.date}}</td>
+            <td id="delete-btn"><a class="col-1" href="/delete_task/{{to_do_list.title}}/{{task.id}}/"><i class="fas fa-trash m-1"></i></a></td>
+        </tr>
+		{% endfor %}     
+	</table>
+	{% else %}
+	<p>No task found</p>
+	{% endif %}
+</div>
+	<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" >
+    </script>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" >
+    </script>
+    <script>
+		$('#date-btn').click(function() {
+			$("#datepicker").show()
 		});
-
-		const italicBtn = document.getElementById('italic-btn');
-		italicBtn.addEventListener('click', () => {
-			document.execCommand('italic', false, null);
-		});
-
-		const underlineBtn = document.getElementById('underline-btn');
-		underlineBtn.addEventListener('click', () => {
-			document.execCommand('underline', false, null);
-		});
-
-		const strikethroughBtn = document.getElementById('strikethrough-btn');
-		strikethroughBtn.addEventListener('click', () => {
-			document.execCommand('strikethrough', false, null);
-		});
-
-		const bulletBtn = document.getElementById('bullet-btn');
-		bulletBtn.addEventListener('click', () => {
-			document.execCommand('insertUnorderedList', false, null);
-		});
-
-		const numberBtn = document.getElementById('number-btn');
-		numberBtn.addEventListener('click', () => {
-			document.execCommand('insertOrderedList', false, null);
-		});
-
-	</script>
-    
-</body>
-</html>
+    </script>
 
 {% endblock %}

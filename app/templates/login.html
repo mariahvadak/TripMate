@@ -1,44 +1,79 @@
-{% extends "base.html" %}
-{% block title %}Log in{% endblock %}
-{% block container %}
-<style>
-    .card{
-        grid-row: 2/3;
-        grid-column: 2/3;
-        margin: 30px auto;
-        display: grid;
-        grid-template-rows: 1fr 8fr 1fr ;
-    }
-    .card div{
-        grid-row: 2/3;
-    }   
-    footer{
-      position: absolute;
-    } 
-</style>
-
-<div class="card border-dark mb-3" style="max-width: 25rem;">
-    <div class="card-body">
-        <h2 class="card-title" style="text-align: center;">Log In</h2>
-        <br>
-        <form class="row g-3" method="POST">
-            <div class="col-12">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="email">
-            </div>
-            <div class="col-12">
-                <label for="inputPassword4" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" name="password">
-            </div>
-            <div class="col-md-4"></div>
-            <button type="submit" class="btn btn-primary col-md-4 my-3">Log in</button>
-            <div class="col-md-4"></div>
-        </form>
-        <div class="row g-3">
-          <a href="/signup" class="col-md-6" style="font-size: 13px; text-align: center;">Don't have an account?</a>
-          <a href="/signup" class="col-md-6" style="font-size: 13px; text-align: center;">Forgot Password</a>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Log in</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/TranPlaneBlack.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/login.css') }}">
+</head>
+<body>
+	<header>
+        <div class="logo">
+            <a href="/" class="plane"></a>
+            <h1>TripMate</h1>
         </div>
-      </div>
-</div>
-
-{% endblock %}
+    </header>
+    <main>
+        <section class="hero">
+            <div class="login-box">
+                {% with messages = get_flashed_messages(with_categories=true) %} 
+                {% if messages %} 
+                {% for category, message in messages %} 
+                    {% if category =='login-error' %}
+                        <div class="alert error">
+                            <input type="checkbox" id="alert1"/>
+                            <label class="close" title="close" for="alert1">
+                                <i class="fa fa-remove"></i>
+                            </label>
+                            <p class="inner">
+                                <strong>{{message}}</strong> 
+                            </p>
+                        </div>
+                    {% elif category =='login-success'%}
+                        <div class="alert success">
+                            <input type="checkbox" id="alert1"/>
+                            <label class="close" title="close" for="alert1">
+                                <i class="fa fa-remove"></i>
+                            </label>
+                            <p class="inner">
+                                <strong>{{message}}</strong> 
+                            </p>
+                        </div>
+                    {% endif %} 
+                {% endfor %} 
+                {% endif %} 
+                {% endwith %}
+                <h2>Login to Your Account</h2>
+                <form method="POST">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button class="btn-primary">Login</button>
+                </form>
+                <div class="links">
+                    <a href="/updatepw/">Forgot Password?</a>
+                    <span> | </span>
+                    <a href="/signup/">Don't have an account?</a>
+                </div>
+            </div>               
+        </section>
+	</main>
+	<footer>
+        <p>&copy; 2023 TripMate. All rights reserved. Email us at TripMate@gmail.com.</p>
+        <div class="social">
+            <a href="https://www.facebook.com/alex.eugene.hunt" target="_blank" id="FB"></a>
+            <a href="https://twitter.com/AlexEugeneHunt" target="_blank" id="TW"></a>
+            <a href="https://www.linkedin.com/in/alex-hunt-4782a4179/" target="_blank" id="LN"></a>
+            <div id="toggle" onclick="toggle()"></div>
+        </div>
+	</footer>
+    <script type="text/javascript">
+        function toggle() {
+            var int = document.getElementById('int');
+            int.classList.toggle('active');
+        }
+    </script>
+	
+</body>
+</html>

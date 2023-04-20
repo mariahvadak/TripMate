@@ -5,13 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
         <title>{% block title %}TripMate{% endblock %}</title>
     </head>
 
     <style>
         body {
             padding-top: 80px;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
         }
     
         footer {
@@ -37,7 +39,11 @@
         }
         .navbar-nav .nav-item > a:hover {
             background-color: #3BA2A8;
+<<<<<<< HEAD
             color: #f1cfb4;
+=======
+            color: black;
+>>>>>>> 537f7b0add94debb6b29cb3bce74abac414cd080
         }
 
         @media (min-width: 992px) {
@@ -84,16 +90,21 @@
         <div class="container-fluid">
             <img src="/static/images/TranLogo.png" width="75" height="50">
             <br>
+<<<<<<< HEAD
             <a class="navbar-brand" href="/"> TripMate </a>
+=======
+            <a class="navbar-brand" href="/home"> TripMate </a>
+>>>>>>> 537f7b0add94debb6b29cb3bce74abac414cd080
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto justify-content-start">
                     <li class="nav-item">
-                        <a class="nav-link" href="/"> <span class="fas fa-home"></span> Home </a>
+                        <a class="nav-link" href="/home"> <span class="fas fa-home"></span> Home </a>
                     </li>
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a class="nav-link" href="/todolists/"> <span class="fas fa-home"></span> To-do Lists </a>
                     </li>
                     <li class="nav-item">
@@ -101,38 +112,31 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/"> <span class="fas fa-cog"></span> Settings </a>                    
+=======
+                        <a class="nav-link" href="/calendar/"> <span class="fa-regular fa-calendar-days"></span> Calendar </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/todolist/"> <span class="fas fa-tasks"></span> To-do Lists </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/"> <span class="fas fa-sign-out-alt"></span> Log out </a>                    
+>>>>>>> 537f7b0add94debb6b29cb3bce74abac414cd080
                 </ul>
 
             </div>
         </div>
     </nav>     
-
-    {% with messages = get_flashed_messages(with_categories=true) %} 
-        {% if messages %} 
-            {% for category, message in messages %} 
-                {% if category =='error' %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% else %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endif %} 
-            {% endfor %} 
-        {% endif %} 
-    {% endwith %}
     <body id="body">
         <div class="container-fluid">
             {% block container %} 
             {% endblock %}    
         </div>
         <center>
+        
             <footer id="footer">
+            <hr style="color:#3BA2A8">
                 <small>
-                    Contact us for support at <a href="mailto://...@ou.edu">TripMate@ou.edu </a> (we probably won't answer)<br>
+                    Contact us for support at <a href="mailto://...@ou.edu" style="color:#3BA2A8">TripMate@ou.edu </a><br>
                     Copyright &copy; 2023 Team LAMT at OU
                 </small>
             </footer>

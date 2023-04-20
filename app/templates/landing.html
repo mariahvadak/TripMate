@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome to TripMate!</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/TranPlaneBlack.png') }}">
+    <link href="{{ url_for('static', filename='/landing.css') }}" rel="stylesheet">
+</head>
+<body>
+	<header>
+        <div class="logo">
+            <a href="/" class="plane"></a>
+            <h1>TripMate</h1>
+        </div>
+	</header>
+    <script type="text/javascript">
+        function toggle() {
+            var int = document.getElementById('int');
+            int.classList.toggle('active');
+        }
+    </script>
+	<main>
+        <section class="hero">
+            <div class="landing-box container">
+                <h2 class="m-3">Welcome to TripMate!</h2>
+                <p>
+                    We are thrilled to have you here and cannot wait to help you plan your dream vacation. Our website offers a vast range of destinations, from breathtaking natural wonders to vibrant cities, exotic beaches, and everything in between.
+                </p>
+                <a href="/login/" class="login"><button class="btn-primary">Login </button></a>
+                <a href="/signup/" class="signup"><button class="btn-secondary">Sign Up</button></a>
+            </div>
+        </section>
+	</main>
+	<footer>
+		<p style="font-size: 18px;">&copy; 2023 TripMate | Contact us at TripMate@gmail.com</p>
+        <div class="social">
+            <a href="https://www.facebook.com/alex.eugene.hunt" target="_blank" id="FB"></a>
+            <a href="https://twitter.com/AlexEugeneHunt" target="_blank" id="TW"></a>
+            <a href="https://www.linkedin.com/in/alex-hunt-4782a4179/" target="_blank" id="LN"></a>
+            <div id="toggle" onclick="toggle()"></div>
+        </div>
+	</footer>
+</body>
+</html>

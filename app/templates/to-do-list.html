@@ -2,34 +2,21 @@
 {% block title %}To-do Lists{% endblock %}
 {% block container %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <meta charset="UTF-8">
-        <title>To-Do List</title>
-    </head>
 
     <!-- dashboard -->
     <style>
-        .title-container {
-            position: relative;
-            left: 35px;
-        }
         .container {
             padding: 30px 0px;
         }
-        #to-do-list-options .css-button-gradient--2 {
-            margin-bottom: 40px;
-            margin-right: 20px;
-            height: 50px;
-            font-size: 14px;
-        }
+        
         .css-button-gradient--2 {
             min-width: 120px;
-            max-width: 150px;
-            height: 30px;
+            max-width: 170px;
+            height: 50px;
+            width: 170px;
             color: #fff;
             font-weight: bold;
             cursor: pointer;
@@ -48,49 +35,19 @@
         .css-button-gradient--2:active {
             top: 2px;
         }
-    
-        #to-do-lists {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 1200px;
-        margin: 0 auto;
+
+        #title{
+            height: 50px !important;
+            border: solid 2px #3BA2A8;
+            border-radius: 5px;
+
         }
 
-        #to-do-list-options {
-        display: flex;
-        align-items: flex-start;
-        }
-
-        #to-do-lists li {
-        width: 16.66%;
-        text-align: center;
-        margin-bottom: 45px;
+        #title: after{
+            border: solid 2px #3BA2A8;
+            border-radius: 5px;
         }
     
-        #to-do-lists li div {
-            position: relative;
-        }
-    
-        #to-do-lists li img {
-            display: block;
-            margin: 0 auto 10px;
-        }
-    
-        #to-do-lists li span {
-            display: block;
-            font-weight: bold;
-            position: absolute;
-            bottom: 10;
-            left: 0;
-            right: 0;
-        }
-    </style>
-    
-    <!-- todo edit page -->
-    <style>
         edit-section {
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
@@ -109,142 +66,90 @@
 		.text-page:focus {
 			outline: none;
 		}
-        .formatting-btn {
-			background-color: #f1cfb4;
-			border: none;
-			color: #fff;
-			padding: 10px 20px;
-			font-size: 10px;
-			border-radius: 5px;
-			cursor: pointer;
-			transition: background-color 0.3s;
-			margin-right: 10px; /* add some margin between buttons */
-		}
+       
+        #edit-btn, #delete-btn {
+            min-width: 40px;
+            height: 40px;
+            color: #fff;
+            padding: 5px 5px;
+            padding-top:2px;
+            padding-right:5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 0px;
+            border: 2px solid #3BA2A8;
+            background: #3BA2A8;
+          }
+        #edit-btn:hover {
+            background: #eaf3f4;
+            color: #3BA2A8
+          }
+        #delete-btn:hover {
+            background: #eaf3f4;
+            color: #3BA2A8
+        }
+        .card{
+            background-color:#eaf3f4;
+            width: 18rem; 
+            border: solid #3BA2A8; 
+            margin: 10px;
+        }
 
-		.formatting-btn:hover {
-			background-color: #ff9b71;
-		}
     </style>
-
-    <body>
-        <div class="title-container">
-            <h2>To-Do Lists</h2>
-        </div>
-
-        <div id="dashboard-section">
-            <div class="container">
-                <div class="row">
-                    <div>
-                        <div id="to-do-list-options">
-                            <button id="create-list-btn" class="css-button-gradient--2">Create New To-Do List</button>
-                            <button id="delete-list-btn" class="css-button-gradient--2">Delete Selected To-Do List</button>
-
-                            <div id="list-name-input-container" style="display: none;">
-                              <input type="text" id="list-name-input" placeholder="Enter the name of your new list">
-                              <button id="submit-list-name-btn" class="css-button-gradient--2">Submit</button>
-                            </div>
-                        </div>                          
-                    </div>
-                    <div class="col-md-12">
-                        <ul id="to-do-lists">
-                            {% if to_do_lists %}
-                                {% for todo in to_do_lists %}
-                                    <li data-id="{{ todo.id }}">
-                                        <div class="todo-item">
-                                            <img src="/static/images/todolist_icon.png" width="50" height="50">
-                                            <h5>
-                                                <a href="{{ url_for('views.edit_todo_list', todo_id=todo.id) }}">{{ todo.title }}</a>
-                                            </h5>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            {% else %}
-                                <p>No to-do lists found.</p>
-                            {% endif %}
-                        </ul>
-                    </div>                    
-                </div>
+    <h1 class="mx-5 my-2">To-Do Lists</h1>
+    <div class="mx-5 my-3">
+        <button id="create-list-btn" class="css-button-gradient--2"><i class="fas fa-plus m-1"></i>New To-do List</button> 
+    </div>
+    <form method="POST">
+        <div class="row row-cols-2 mx-5 my-3 justify-content-start" id="list-name-input-container" style="height:100px; display:none;">
+            <div class="col-6" style="padding-left: 0" >
+                <input type="text" id="title" class="form-control" name="title" placeholder="Enter the name of your new list">
+            </div>   
+            <div class="col-2 ">
+                <button type="submmit" id="add-list-btn" class="css-button-gradient--2">Add</button>                      
             </div>
         </div>
-    </body>
-        
+    <form>
+    {% if to_do_lists|length == 0 %}
+        <p class="mx-5 my-2"><i>No to-do lists found</i></p>
+    {% endif %}
+     
+    {% if to_do_lists|length != 0 %}
+    <div class="container text-center">
+        <div class="row row-cols-3 justify-content-center">
+        {% for list in to_do_lists %}
+            <div class="card" id="list-{{id}}">
+                <div class="card-body row row-cols-2" style="padding-right:0">
+                    <img src="{{ url_for('static', filename='images/todolist_icon.png') }}" class="col-3" width="50" height="60" style="padding-right:0; margin-top:14px;">
+                    <div class='col-8 m-1'>
+                        <h5 class="mx-2"><b>{{list.title}}</b></h5>
+                        <div class='row row-cols-2 mx-4'>
+                            <a class="col-1" href="{{list.title}}/" style="margin-right: 25px;">
+                                <button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+                            </a>
+                            <a class="col-1" href="/delete/{{list.id}}/">
+                                <button type="button" class="btn btn-sm text-center" id="delete-btn"><i class="fa fa-trash-o"  style="font-size:20px"></i></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}  
+
     <script>
-        // Wait for the document to be ready
-        $(document).ready(function() {
-            // Get references to the create and delete buttons
-            var createBtn = $('#create-list-btn');
-            var deleteBtn = $('#delete-list-btn');
-
-            // Get the create button element
-            const createButton = document.getElementById('create-list-btn');
-            createButton.addEventListener('click', function() {
-                // Show the input field and the submit button
-                $('#list-name-input-container').show();
-
-                // Get the submit button element
-                const submitButton = document.getElementById('submit-list-name-btn');
-                submitButton.addEventListener('click', function() {
-                    // Get the value of the input element
-                    const listName = document.getElementById('list-name-input').value;
-
-                    // Call a function to create a new todo list with the specified name
-                    createNewTodoList(listName);
-                });
-            });
-
-            // Function to create a new todo list
-            function createNewTodoList(title) {
-                fetch('/todolists/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ title }),
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    // Get the ID of the newly created todo list
-                    const newTodoListId = data.id;
-
-                    // Redirect the user to the URL of the new todo list
-                    window.location.href = `/todolists/${newTodoListId}`;
-                });
-            }
-
-            // Add an event listener for the click event on the delete button
-            deleteBtn.on('click', function(event) {
-                // Prevent the default behavior of the click event
-                event.preventDefault();
-
-                // Get the ID of the to-do list to delete from the data attribute of the button
-                var todoId = deleteBtn.data('id');
-
-                // Send an AJAX request to the server to delete the to-do list
-                $.ajax({
-                    type: 'DELETE',
-                    url: '/todolists/' + todoId,
-                    success: function(response) {
-                        // Redirect the user to the to-do list dashboard
-                        window.location.href = '/todolists/';
-                    },
-                    error: function(response) {
-                        // Handle the error response
-                        console.error(response);
-                    }
-                });
-            });
-
+        var createBtn = $('#create-list-btn');
+        var deleteBtn = $('#delete-list-btn');
+        var editBtn = $('#edit-btn');
+        createBtn.click(function() {
+            $('#list-name-input-container').show();
         });
     </script>
-
-    <center>
-        <footer id="footer">
-            <small>
-                <a target="_blank" href="https://icons8.com/icon/TnUIlxLI9mqs/to-do-list">To Do List</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-            </small>
-        </footer>
-    </center>
-
-</html>
 
 {% endblock %}

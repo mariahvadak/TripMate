@@ -1,54 +1,102 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from flask import jsonify
-from flask_login import current_user, login_required
-from .models import TodoList
-from . import db
+from flask import Blueprint, render_template, flash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user, LoginManager
+from flask import Flask, render_template, request, redirect, url_for
+from app import models
+from app.models import User, Todolist, Task
+from datetime import date, datetime
+from . import db  
+import datetime
 
 views = Blueprint('views', __name__)
 
 @views.route('/')
-@login_required
-def home():
-    return render_template('home.html')
+def landing_page():
+    return render_template("landing.html")
 
-@views.route('/todolists/', methods=['GET', 'POST'])
+@views.route('/home', methods=['GET'])
 @login_required
-def todolist():
-    # Query all the to-do lists from the database
-    to_do_lists = TodoList.query.all()
+def home_page():
+    return render_template("home.html", user=current_user)
 
+@views.route('/signup/')
+def signup_page():
+    return render_template("signup.html")
+
+@views.route('/calendar/')
+@login_required
+def calendar():
+    date = datetime.date.today().strftime("%m-%d-%Y")
+    tasks = Task.query.filter_by(date=date).all()
+    todolist = []
+    for task in tasks:
+        todolist.append(Todolist.query.filter_by(id=task.todolist).first())
+    return render_template("calendar.html", date=date, tasks=tasks, todolist=todolist)
+
+@views.route('/calendar/<date_str>/', methods=['GET', 'POST'])
+@login_required
+def get_calendar(date_str):
+    tasks = Task.query.filter_by(date=date_str).all()
+    date_list = date_str.split('-')
+    todolist = []
+    for task in tasks:
+        todolist.append(Todolist.query.filter_by(id=task.todolist).first())
+    return render_template('calendar.html', date=date_list, tasks=tasks, todolist=todolist)
+
+@views.route('/todolist/', methods=['GET', 'POST'])
+@login_required
+def to_do_lists():
+    userId = current_user.get_id()
+    to_do_lists = Todolist.query.filter_by(user=userId).all()
     if request.method == 'POST':
-        # Get the title of the new to-do list from the form data
-        title = request.json.get('title')
-
-        # Create a new to-do list object and add it to the database
-        new_todo_list = TodoList(title=title, user_id=current_user.id)
-        db.session.add(new_todo_list)
+        title = request.form.get('title')
+        created_date = date.today()
+        new_list = Todolist(user=userId, date=created_date, title=title )
+        db.session.add(new_list)
         db.session.commit()
+        return redirect(url_for('views.to_do_lists'))
 
-        # Return the ID of the newly created todo list as a JSON response
-        return jsonify(id=new_todo_list.id)
+    return render_template('to-do-list.html', to_do_lists=to_do_lists)
 
-    # Render the to-do list template with the list of to-do lists and links to each individual to-do list
-    return render_template('to-do-list.html', to_do_lists=to_do_lists, individual_links=True)
-
-@views.route('/todolists/<int:todo_id>/edit', methods=['GET', 'POST'])
+@views.route('/todolist/<title>/', methods=['GET', 'POST'])
 @login_required
-def edit_todo_list(todo_id):
-    # Query the todo list with the specified ID from the database
-    todo_list = TodoList.query.get(todo_id)
-
+def doc(title):
+    to_do_list = Todolist.query.filter_by(title=title).first()
+    tasks = Task.query.filter_by(todolist=to_do_list.id).all()
     if request.method == 'POST':
-        # Update the title of the todo list
-        todo_list.title = request.form['title']
+        todolist= to_do_list.id
+        if request.form.get('datepicker') == '':
+            date = datetime.date.today().strftime("%m-%d-%Y")
+        else:
+            date = datetime.datetime.strptime(request.form.get('datepicker'), "%Y-%m-%d").strftime("%m-%d-%Y")
+        print(date)
+        text = request.form.get('text')
+        complete = False
+        new_task = Task(todolist=todolist, date=date, text=text, complete=complete)
+        db.session.add(new_task)
         db.session.commit()
+        return redirect(url_for('views.doc', title=title))
+    return render_template('todo_doc.html', to_do_list=to_do_list, tasks=tasks)
 
-        # Redirect the user to the todo list dashboard
-        return redirect(url_for('views.todolist'))
+@views.route("/update/<title>/<id>/",  methods=['GET','POST'])
+def update(title, id):
+    task = Task.query.filter_by(id=id).first()
+    task.complete = True
+    db.session.commit()
+    print(task.complete)
+    return redirect(url_for("views.doc", title=title))
 
-    # Render the edit todo list template with the specified todo list and its items
-    return render_template('todo_doc.html', todo_list=todo_list)
+@views.route("/delete/<int:todo_id>/", methods=['GET', 'POST'])
+def delete_list(todo_id):
+    todo = Todolist.query.filter_by(id=todo_id).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect(url_for("views.to_do_lists"))
 
-@views.route('/todo-doc/')
-def doc():
-    return render_template('todo_doc.html')
+@views.route("/delete_task/<title>/<int:task_id>/", methods=['GET', 'POST'])
+def delete_task(title, task_id):
+    task = Task.query.filter_by(id=task_id).first()
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for("views.doc", title=title))
+
