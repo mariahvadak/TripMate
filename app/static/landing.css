@@ -84,12 +84,13 @@ button {
 .btn-primary {
 	background-color: #3BA2A8;
 	color: #fff;
-	border: none;
+	border: 2px solid #3BA2A8;
 	margin-right: 10px;
 }
 
 .btn-primary:hover {
 	background-color: #000;
+	border: 2px solid #000;
 }
 
 .btn-secondary {

@@ -3,15 +3,30 @@
 	"use strict";
 
 	document.addEventListener('DOMContentLoaded', function(){
-    var today = new Date(),
-        year = today.getFullYear(),
-        month = today.getMonth(),
-        monthTag =["January","February","March","April","May","June","July","August","September","October","November","December"],
-        day = today.getDate(),
-        days = document.getElementsByTagName('td'),
-        selectedDay,
-        setDate,
-        daysLen = days.length;
+        var url = window.location.href.split('/')
+        if (url.length > 5){
+            var currentday = url[4].split('-')
+            var date_str = currentday[2] + "-" + currentday[0] + "-" + currentday[1];
+            var today = new Date(date_str)
+            var year = today.getFullYear(),
+            month = today.getMonth(),
+            monthTag =["January","February","March","April","May","June","July","August","September","October","November","December"],
+            day = today.getDate(),
+            days = document.getElementsByTagName('td'),
+            selectedDay,
+            setDate,
+            daysLen = days.length;
+        } else {
+            var today = new Date()
+            year = today.getFullYear(),
+            month = today.getMonth(),
+            monthTag =["January","February","March","April","May","June","July","August","September","October","November","December"],
+            day = today.getDate(),
+            days = document.getElementsByTagName('td'),
+            selectedDay,
+            setDate,
+            daysLen = days.length;
+        };
 // options should like '2014-01-01'
     function Calendar(selector, options) {
         this.options = options;
@@ -45,7 +60,7 @@
     
     Calendar.prototype.drawDays = function() {
         var startDay = new Date(year, month, 1).getDay(),
-
+//      下面表示这个月总共有几天
             nDays = new Date(year, month + 1, 0).getDate(),
     
             n = startDay;
@@ -127,9 +142,10 @@
     };
     
      Calendar.prototype.reset = function() {
-         month = today.getMonth();
-         year = today.getFullYear();
-         day = today.getDate();
+        var today = new Date()
+        year = today.getFullYear(),
+        month = today.getMonth(),
+        day = today.getDate();
          this.options = undefined;
          this.drawDays();
      };

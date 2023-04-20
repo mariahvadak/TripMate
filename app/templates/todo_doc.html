@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} To-do Doc {% endblock %}
+{% block title %} {{to_do_list.title}} {% endblock %}
 {% block container %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css" integrity="sha512-YdYyWQf8AS4WSB0WWdc3FbQ3Ypdm0QCWD2k4hgfqbQbRCJBEgX0iAegkl2S1Evma5ImaVXLBeUkIlP6hQ1eYKQ==" crossorigin="anonymous" />
@@ -7,9 +7,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
-	body{
-		font-size: 18px;
-	}
 	h1{
 		padding: 20px 60px;
 	}
@@ -82,19 +79,28 @@
 		border-color: #3BA2A8;
 	}
 
-	#input-date {
-		height: 50px;
-		border: solid 2px #3BA2A8;
-		border-radius: 5px;
-		background-color: #f2f2f2;
-		font-size: 20px;
-		font-color:#3BA2A8;
-		color: #3BA2A8;
-	}
+	
 	.done {
 		color: gray;
 		text-decoration: black line-through;
 	}
+	
+	#date-btn {
+		font-size:36px;
+		color:  #3BA2A8;
+	}
+
+	#datepicker {
+		height: 50px;
+		width: 150px;
+		border: solid 2px #3BA2A8;
+		border-radius: 5px;
+		background-color: #f2f2f2;
+		font-size: 20px;
+		font-color: #3BA2A8;
+		padding: 5px
+	}
+	
 </style>
 	
 <h1 class="mx-5 my-2"><b>{{to_do_list.title}}</b></h1>
@@ -103,14 +109,11 @@
 		<div class="col-6" style="padding-left: 0" >
 			<input type="text" id="text" class="form-control" name="text" placeholder="Enter a new task">
 		</div>   
-	</div>
-	<div class="row row-cols-2 mx-5 justify-content-evenly">
-		<div class="col-1" style="padding-left: 0">
-				<input type="text" id="datepicker" name="datepicker">                
-			</div>
-			<div class="col-1" style="padding-left: 0">
-				<button type="submmit" id="add-list-btn" class="css-button-gradient--2 fas fa-plus"></button>                      
-			</div>
+		<div class="col-1">     
+			<input type="date" id="datepicker" name="datepicker" placeholder="Due date" class="p-0">         
+		</div> 
+		<div class="col-1" style="margin-left:60px">
+			<button type="submmit" id="add-list-btn" class="css-button-gradient--2 fas fa-plus"></button>                      
 		</div>
 	</div>
 <form>
@@ -146,12 +149,18 @@
 	<p>No task found</p>
 	{% endif %}
 </div>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" >
+    </script>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" >
+    </script>
     <script>
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
+		$('#date-btn').click(function() {
+			$("#datepicker").show()
+		});
     </script>
 
 {% endblock %}

@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/TranPlaneBlack.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='/signup.css') }}">
 </head>
@@ -21,9 +22,36 @@
 	<main>
         <section class="hero">
             <div class="signup-box">
+                {% with messages = get_flashed_messages(with_categories=true) %} 
+                {% if messages %} 
+                {% for category, message in messages %} 
+                    {% if category =='signup-error' %}
+                        <div class="alert error">
+                            <input type="checkbox" id="alert1"/>
+                            <label class="close" title="close" for="alert1">
+                                <i class="fa fa-remove"></i>
+                            </label>
+                            <p class="inner">
+                                <strong>{{message}}</strong> 
+                            </p>
+                        </div>
+                    {% elif category =='signup-success'%}
+                        <div class="alert success">
+                            <input type="checkbox" id="alert1"/>
+                            <label class="close" title="close" for="alert1">
+                                <i class="fa fa-remove"></i>
+                            </label>
+                            <p class="inner">
+                                <strong>{{message}}</strong> 
+                            </p>
+                        </div>
+                    {% endif %} 
+                {% endfor %} 
+                {% endif %} 
+                {% endwith %}
                 <h2>Sign Up </h2>
-                <form method="POST">
-                    <div class="input-container name">
+                
+                  <form method="POST">  <div class="input-container name">
                         <div class="inline">
                             <label for="firstName">First Name:</label>
                             <input type="text" id="firstName" name="firstName" required>
@@ -38,11 +66,11 @@
                         <input type="email" class="form-control" id="inputEmail4" name="email" required>
                     </div>
                     <div class="input-container">
-                        <label for="inputPassword4" class="form-label">Password</label>
+                        <label for="inputPassword4" class="form-label">Password:</label>
                         <input type="password" class="form-control" id="inputPassword4" name="password1" required>
                     </div>
                     <div class="input-container">
-                        <label for="inputPassword4" class="form-label">Confirm Password</label>
+                        <label for="inputPassword4" class="form-label">Confirm Password:</label>
                         <input type="password" class="form-control" id="inputPassword4" name="password2" required>
                     </div>
                     <button class="btn-primary">Sign Up</button>

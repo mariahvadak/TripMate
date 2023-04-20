@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user, LoginManager
 from flask import Flask, render_template, request, redirect, url_for
 from app import models
@@ -18,20 +19,29 @@ def landing_page():
 def home_page():
     return render_template("home.html", user=current_user)
 
-@views.route('/login/')
-def loggin_page():
-    if current_user:
-        flash("You're already logged in", category='success')
-    return render_template("login.html")
-
 @views.route('/signup/')
 def signup_page():
     return render_template("signup.html")
 
 @views.route('/calendar/')
 @login_required
-def calendar_page():
-    return render_template("calendar.html")
+def calendar():
+    date = datetime.date.today().strftime("%m-%d-%Y")
+    tasks = Task.query.filter_by(date=date).all()
+    todolist = []
+    for task in tasks:
+        todolist.append(Todolist.query.filter_by(id=task.todolist).first())
+    return render_template("calendar.html", date=date, tasks=tasks, todolist=todolist)
+
+@views.route('/calendar/<date_str>/', methods=['GET', 'POST'])
+@login_required
+def get_calendar(date_str):
+    tasks = Task.query.filter_by(date=date_str).all()
+    date_list = date_str.split('-')
+    todolist = []
+    for task in tasks:
+        todolist.append(Todolist.query.filter_by(id=task.todolist).first())
+    return render_template('calendar.html', date=date_list, tasks=tasks, todolist=todolist)
 
 @views.route('/todolist/', methods=['GET', 'POST'])
 @login_required
@@ -56,9 +66,10 @@ def doc(title):
     if request.method == 'POST':
         todolist= to_do_list.id
         if request.form.get('datepicker') == '':
-            date = datetime.date.today()
+            date = datetime.date.today().strftime("%m-%d-%Y")
         else:
-            date = datetime.datetime.strptime(request.form.get('datepicker'), '%m/%d/%Y')
+            date = datetime.datetime.strptime(request.form.get('datepicker'), "%Y-%m-%d").strftime("%m-%d-%Y")
+        print(date)
         text = request.form.get('text')
         complete = False
         new_task = Task(todolist=todolist, date=date, text=text, complete=complete)
@@ -88,3 +99,4 @@ def delete_task(title, task_id):
     db.session.delete(task)
     db.session.commit()
     return redirect(url_for("views.doc", title=title))
+
