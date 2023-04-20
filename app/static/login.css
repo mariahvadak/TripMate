@@ -1,0 +1,173 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica;
+}
+
+header {
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px;
+    padding-left: 100px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+}
+.logo {
+	display: flex;
+	flex-direction: row;
+    width: 215px;
+    justify-content: space-between;
+	padding-top: 2px;
+}
+.plane {
+    height: 65px;
+    width: 80px;
+    background-image: url(Images/TranPlane.png);
+    background-size: cover;
+}
+
+.hero {
+	background-image: url("Images/Background4.jpg");
+	background-size: cover;
+	background-position: center center;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	align-items: left;
+}
+
+.login-box {
+	background-color: #fff;
+	border: 2px solid #000000;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	width: 30%;
+	height: 50%;
+	margin: auto;
+	padding: 30px;
+	text-align: center;
+	min-width: 400px;
+	max-width: 500px;
+}
+
+h2 {
+	font-size: 36px;
+	margin: 20px;
+}
+p {
+	text-align: justify;
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+label {
+	display: block;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+input {
+	font-size: 20px;
+	padding: 10px;
+	margin-bottom: 20px;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: 2px solid #ddd;
+}
+
+button {
+	font-size: 20px;
+	padding: 10px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	background-color: #3BA2A8;
+	color: #fff;
+	border: none;
+	margin-bottom: 20px;
+}
+
+button:hover {
+	background-color: #000000;
+}
+
+.links {
+	font-size: 18px;
+	margin-top: 20px;
+}
+
+a {
+	color: #3BA2A8;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	
+    padding-left: 25px;
+	position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
+.social {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 100px;
+    opacity: 100%;
+}
+#FB
+{
+    background: url(Images/Facebook.png);
+    height: 50px;
+    width: 50px;
+}
+#FB:hover
+{
+    background: url(Images/FacebookHover.png)
+}
+#TW 
+{
+    background: url(Images/Twitter.png);
+    height: 50px;
+    width: 50px;
+}
+#TW:hover 
+{
+    background: url(Images/TwitterHover.png)
+}
+#LN 
+{
+    background: url(Images/Ln.png);
+    height: 50px;
+    width: 50px;
+}
+#LN:hover 
+{
+    background: url(Images/LnHover.png)
+}

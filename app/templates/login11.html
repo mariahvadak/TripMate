@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Log in</title>
+    
+	<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/TranPlaneBlack.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/login.css') }}">
+</head>
+<body>
+	<header>
+        <div class="logo">
+            <a href="/" class="plane"></a>
+            <h1>TripMate</h1>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+                {% with messages = get_flashed_messages(with_categories=true) %} 
+                {% if messages %} 
+                {% for category, message in messages %} 
+                    {% if category =='error' %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% else %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %} 
+                {% endfor %} 
+                {% endif %} 
+                {% endwith %}
+                    <div class="login-box">
+                        <h2>Login to Your Account</h2>
+                        <form method="POST">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                            <button class="btn-primary">Login</button>
+                        </form>
+                        <div class="links">
+                            <a href="#">Forgot Password?</a>
+                            <span> | </span>
+                            <a href="/signup/">Don't have an account?</a>
+                        </div>
+                    </div>
+        </section>
+	</main>
+	<footer>
+        <p>&copy; 2023 TripMate. All rights reserved. Email us at TripMate@gmail.com.</p>
+        <div class="social">
+            <a href="https://www.facebook.com/alex.eugene.hunt" target="_blank" id="FB"></a>
+            <a href="https://twitter.com/AlexEugeneHunt" target="_blank" id="TW"></a>
+            <a href="https://www.linkedin.com/in/alex-hunt-4782a4179/" target="_blank" id="LN"></a>
+            <div id="toggle" onclick="toggle()"></div>
+        </div>
+	</footer>
+    <script type="text/javascript">
+        function toggle() {
+            var int = document.getElementById('int');
+            int.classList.toggle('active');
+        }
+    </script>
+	
+</body>
+</html>

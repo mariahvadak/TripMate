@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block title %} Calendar {% endblock %}
+{% block container %}
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">	
+	<link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+	<style>
+		.card{
+            border: solid #3BA2A8; 
+			color: black;
+        }
+		#edit-btn, #delete-btn {
+            min-width: 40px;
+            height: 40px;
+            color: #3BA2A8;
+            padding: 5px 5px;
+            padding-top:2px;
+            padding-right:5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 10px;
+          }
+        #edit-btn:hover {
+            background: #3BA2A8;
+            color: white;
+          }
+
+		.card-header{
+			border-bottom: solid 2px #3BA2A8;
+			background: white;
+			padding-bottom: 0px;
+		}
+	</style>
+	<div class="row row-cols-2">
+	<section class="ftco-section col-8" style="padding-top:40px">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="elegant-calencar d-md-flex">
+						<div class="wrap-header d-flex align-items-center" style="background-color:#3BA2A8">
+				      		<p id="reset">reset</p>
+			        <div id="header" class="p-0">
+		            <div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
+		            <div class="head-info">
+		                <div class="head-day"></div>
+		                <div class="head-month"></div>
+		            </div>
+		            <div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
+			        </div>
+			      </div>
+			      <div class="calendar-wrap">
+			        <table id="calendar">
+		            <thead>
+		                <tr>
+		                    <th>Sun</th>
+		                    <th>Mon</th>
+		                    <th>Tue</th>
+		                    <th>Wed</th>
+		                    <th>Thu</th>
+		                    <th>Fri</th>
+		                    <th>Sat</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+		            </tbody>
+			        </table>
+			      </div>
+			    </div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="container col row-cols-1">
+		<div class="card row" style="width: 18rem; height: auto">
+			<div class="card-body">
+				<h5 class="card-header"><strong>Packing List</strong></h5>
+				<div class="card-text m-2">
+					<li>suncreen</li>
+					<li >suncreen</li>
+					<li>suncreen</li>
+				</div>
+				<a class="col-1" href="/" style="margin-right: 25px;">
+					<button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+				</a>
+			</div>
+		</div>
+		<div class="card row my-4" style="width: 18rem; height: auto">
+			<div class="card-body">
+				<h5 class="card-header"><strong>Packing List</strong></h5>
+				<div class="card-text m-2">
+					<li>suncreen</li>
+					<li >suncreen</li>
+					<li>suncreen</li>
+				</div>
+				<a class="col-1" href="/" style="margin-right: 25px;">
+					<button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+				</a>
+			</div>
+		</div>
+		<div class="card row my-4" style="width: 18rem; height: auto">
+			<div class="card-body">
+				<h5 class="card-header"><strong>Packing List</strong></h5>
+				<div class="card-text m-2">
+					<li>suncreen</li>
+					<li >suncreen</li>
+					<li>suncreen</li>
+				</div>
+				<a class="col-1" href="/" style="margin-right: 25px;">
+					<button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+				</a>
+			</div>
+		</div>
+		<div class="card row my-4" style="width: 18rem; height: auto">
+			<div class="card-body">
+				<h5 class="card-header"><strong>Packing List</strong></h5>
+				<div class="card-text m-2">
+					<li>suncreen</li>
+					<li >suncreen</li>
+					<li>suncreen</li>
+				</div>
+				<a class="col-1" href="/" style="margin-right: 25px;">
+					<button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+				</a>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	
+{% endblock %}

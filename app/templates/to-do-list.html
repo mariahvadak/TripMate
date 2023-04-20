@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% block title %}To-do Lists{% endblock %}
+{% block container %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- dashboard -->
+    <style>
+        body{
+            font-size: 18px;
+        }
+        .container {
+            padding: 30px 0px;
+        }
+        
+        .css-button-gradient--2 {
+            min-width: 120px;
+            max-width: 170px;
+            height: 50px;
+            width: 170px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+            background-size: 120% auto;
+            background-color: #3BA2A8;
+        }
+        .css-button-gradient--2:hover {
+            background-position: right center;
+        }
+        .css-button-gradient--2:active {
+            top: 2px;
+        }
+
+        #title{
+            height: 50px !important;
+            border: solid 2px #3BA2A8;
+            border-radius: 5px;
+
+        }
+
+        #title: after{
+            border: solid 2px #3BA2A8;
+            border-radius: 5px;
+        }
+    
+        edit-section {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		.text-page {
+			margin: 50px auto;
+			padding: 20px;
+			width: 80%;
+			height: 800px; /* Updated height */
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			line-height: 1.5;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+		.text-page:focus {
+			outline: none;
+		}
+       
+        #edit-btn, #delete-btn {
+            min-width: 40px;
+            height: 40px;
+            color: #fff;
+            padding: 5px 5px;
+            padding-top:2px;
+            padding-right:5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 0px;
+            border: 2px solid #3BA2A8;
+            background: #3BA2A8;
+          }
+        #edit-btn:hover {
+            background: #eaf3f4;
+            color: #3BA2A8
+          }
+        #delete-btn:hover {
+            background: #eaf3f4;
+            color: #3BA2A8
+        }
+        .card{
+            background-color:#eaf3f4;
+            width: 18rem; 
+            border: solid #3BA2A8; 
+            margin: 10px;
+        }
+
+    </style>
+    <h1 class="mx-5 my-2">To-Do Lists</h1>
+    <div class="mx-5 my-3">
+        <button id="create-list-btn" class="css-button-gradient--2"><i class="fas fa-plus m-1"></i>New To-do List</button> 
+    </div>
+    <form method="POST">
+        <div class="row row-cols-2 mx-5 my-3 justify-content-start" id="list-name-input-container" style="height:100px; display:none;">
+            <div class="col-6" style="padding-left: 0" >
+                <input type="text" id="title" class="form-control" name="title" placeholder="Enter the name of your new list">
+            </div>   
+            <div class="col-2 ">
+                <button type="submmit" id="add-list-btn" class="css-button-gradient--2">Add</button>                      
+            </div>
+        </div>
+    <form>
+    {% if to_do_lists|length == 0 %}
+        <p class="mx-5 my-2"><i>No to-do lists found</i></p>
+    {% endif %}
+     
+    {% if to_do_lists|length != 0 %}
+    <div class="container text-center">
+        <div class="row row-cols-3 justify-content-center">
+        {% for list in to_do_lists %}
+            <div class="card" id="list-{{id}}">
+                <div class="card-body row row-cols-2" style="padding-right:0">
+                    <img src="{{ url_for('static', filename='images/todolist_icon.png') }}" class="col-3" width="50" height="60" style="padding-right:0; margin-top:14px;">
+                    <div class='col-8 m-1'>
+                        <h5 class="mx-2"><b>{{list.title}}</b></h5>
+                        <div class='row row-cols-2 mx-4'>
+                            <a class="col-1" href="{{list.title}}/" style="margin-right: 25px;">
+                                <button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+                            </a>
+                            <a class="col-1" href="/delete/{{list.id}}/">
+                                <button type="button" class="btn btn-sm text-center" id="delete-btn"><i class="fa fa-trash-o"  style="font-size:20px"></i></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}  
+
+
+
+    <div class="container text-center">
+        <div class="row row-cols-3 justify-content-center">
+            <div class="card">
+                <div class="card-body row row-cols-2" style="padding-right:0">
+                    <img src="{{ url_for('static', filename='images/todolist_icon.png') }}" class="col-3" width="50" height="60" style="padding-right:0; margin-top:14px;">
+                    <div class='col-8 m-1'>
+                        <h5 class="mx-2">Places to go</h5>
+                        <div class='row row-cols-2 mx-4'>
+                            <button type="button" class="btn btn-sm text-center col-1 mx-1" id="edit-btn"><i class="far fa-edit m-1" style="font-size:20px"></i></button>
+                            <button type="button" class="btn btn-sm text-center col-1" id="delete-btn"><i class="fa fa-trash-o m-1"  style="font-size:20px"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+            <div class="card">
+                <div class="card-body row row-cols-2" style="padding-right:0">
+                    <img src="{{ url_for('static', filename='images/todolist_icon.png') }}" class="col-3" width="50" height="60" style="padding-right:0; margin-top:14px;">
+                    <div class='col-8 m-1'>
+                        <h5 class="mx-2">Places to go</h5>
+                        <div class='row row-cols-2 mx-4'>
+                            <button type="button" class="btn btn-sm text-center col-1 mx-1" id="edit-btn"><i class="far fa-edit m-1" style="font-size:20px"></i></button>
+                            <button type="button" class="btn btn-sm text-center col-1" id="delete-btn"><i class="fa fa-trash-o m-1"  style="font-size:20px"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+            <div class="card">
+                <div class="card-body row row-cols-2" style="padding-right:0">
+                    <img src="{{ url_for('static', filename='images/todolist_icon.png') }}" class="col-3" width="50" height="60" style="padding-right:0; margin-top:14px;">
+                    <div class='col-8 m-1'>
+                        <h5 class="mx-2" style="font-color:white;">Packing List</h5>
+                        <div class='row row-cols-2 mx-4'>
+                            <button type="button" class="btn btn-sm text-center col-1 mx-1" id="edit-btn"><i class="far fa-edit m-1" style="font-size:20px"></i></button>
+                            <button type="button" class="btn btn-sm text-center col-1" id="delete-btn"><i class="fa fa-trash-o m-1"  style="font-size:20px"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        </div>	
+    </div>
+    <script>
+        var createBtn = $('#create-list-btn');
+        var deleteBtn = $('#delete-list-btn');
+        var editBtn = $('#edit-btn');
+        createBtn.click(function() {
+            $('#list-name-input-container').show();
+        });
+        // Function to create a new todo list
+        /*function createNewTodoList(title) {
+            fetch('/todolists/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // Get the ID of the newly created todo list
+                const newTodoListId = data.id;
+
+                // Redirect the user to the URL of the new todo list
+                window.location.href = `/todolists/${newTodoListId}`;
+            });
+        }*/
+
+            // Add click event listener to the delete button
+
+    </script>
+
+{% endblock %}

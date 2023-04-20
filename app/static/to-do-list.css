@@ -1,0 +1,60 @@
+#to-do-list-options .css-button-gradient--3 {
+    margin-right: 25px;
+    margin-bottom: 20px;
+}
+.css-button-gradient--3 {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-size: 120% auto;
+    background-image: linear-gradient(315deg, #3BA2A8 0%, #f1cfb4 75%);
+}
+.css-button-gradient--3:hover {
+    background-position: right center;
+}
+.css-button-gradient--3:active {
+    top: 2px;
+}
+
+#to-do-lists {
+    list-style: none;
+    margin: 10;
+    padding: 10;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: right;
+}
+
+#to-do-lists li {
+    margin-bottom: 50px;
+    margin-right: 50px;
+    width: 150px;
+    text-align: center;
+}
+
+#to-do-lists li div {
+    position: relative;
+}
+
+#to-do-lists li img {
+    display: block;
+    margin: 0 auto 10px;
+}
+
+#to-do-lists li span {
+    display: block;
+    font-weight: bold;
+    position: absolute;
+    bottom: 10;
+    left: 0;
+    right: 0;
+}

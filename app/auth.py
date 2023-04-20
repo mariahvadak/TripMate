@@ -12,14 +12,11 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first()
-        print(user)
-        print(password)
-        print(user.password)
         if user:
             if check_password_hash(user.password, password):
                 flash('Log in succesfully', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home_page'))
+                return redirect(url_for('views.home_page', user=user))
             else:
                 flash('Incorrect password, please try again', category='error')
         else:
@@ -58,3 +55,4 @@ def signup():
             return redirect(url_for('views.home_page'))
            
     return render_template('signup.html')
+
