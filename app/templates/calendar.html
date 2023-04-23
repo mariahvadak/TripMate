@@ -4,6 +4,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">	
 	<link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
 	<style>
+		.container-fluid{
+			padding-left:12px;
+		}
 		.card{
             border: solid #3BA2A8; 
 			color: black;
@@ -32,118 +35,200 @@
 			border-bottom: solid 2px #3BA2A8;
 			background: white;
 			padding-bottom: 0px;
+			font-size: 26px;
 		}
+		body {
+            padding-top: 80px;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+    
+        footer {
+            bottom: 0;
+            width: 100%;
+            margin: 20px auto;
+        }
+        .navbar {
+            background-color: #3BA2A8 !important;
+            padding-left: 16px;
+        }
+        .navbar-brand {
+            color: white;
+        }
+        .navbar-nav .nav-link .fas,
+        .navbar-nav .nav-link .fa,
+        .navbar-nav .nav-link {
+            color: white;
+        }
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-nav .nav-item > a:hover {
+            background-color: #3BA2A8;
+            color: black;
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                display: flex;
+                align-items: center;
+                margin-left: 10px;
+                margin-right: auto;
+            }
+            
+            .navbar-nav > li {
+                margin-right: 25px;
+            }
+        }
+    
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                position: fixed;
+                top: 55px;
+                bottom: 0;
+                right: 0;
+                left: auto;
+                overflow-y: scroll;
+                background-color: #3BA2A8;
+                padding: 10px;
+            }
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='6' x2='30' y2='6' stroke='white' stroke-width='2'/%3E%3Cline x1='0' y1='15' x2='30' y2='15' stroke='white' stroke-width='2'/%3E%3Cline x1='0' y1='24' x2='30' y2='24' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
+            }
+            .navbar-collapse form {
+                width: 100%;
+                margin: 0 auto;
+            }
+            /* Added to left-align collapsed menu items */
+            .navbar-nav.mr-auto.justify-content-start {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+			.container{
+				padding-left: 30px;
+			}
+        }
 	</style>
 	<div class="row row-cols-2">
 		<section class="ftco-section col-8" style="padding-top:40px">
 			<div class="container">
 				<div class="row justify-content-center">
-					<div class="col-md-6 text-center mb-5">
-					</div>
+					<div class="col-md-6 text-center mb-5"></div>
 				</div>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-11" style="padding-right:0px;">
 						<div class="elegant-calencar d-md-flex">
 							<div class="wrap-header d-flex align-items-center" style="background-color:#3BA2A8">
 								<p id="reset">reset</p>
 								<div id="header" class="p-0">
-								<div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
-								<div class="head-info">
-									<div class="head-day"></div>
-									<div class="head-month"></div>
+									<div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
+									<div class="head-info">
+										<div class="head-day"></div>
+										<div class="head-month"></div>
+									</div>
+									<div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
 								</div>
-								<div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
 							</div>
-						</div>
-						<div class="calendar-wrap">
-							<table id="calendar">
-							<thead>
-								<tr>
-									<th>Sun</th>
-									<th>Mon</th>
-									<th>Tue</th>
-									<th>Wed</th>
-									<th>Thu</th>
-									<th>Fri</th>
-									<th>Sat</th>
-								</tr>
-							</thead>
-							<tbody>
-							<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							</tr>
-							<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							</tr>
-							<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							</tr>
-							<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							</tr>
-							<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							</tr>
-							<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							</tr>
-							</tbody>
-							</table>
-						</div>
-						</div>
+							<div class="calendar-wrap">
+								<table id="calendar">
+									<thead>
+										<tr>
+											<th>Sun</th>
+											<th>Mon</th>
+											<th>Tue</th>
+											<th>Wed</th>
+											<th>Thu</th>
+											<th>Fri</th>
+											<th>Sat</th>
+										</tr>
+									</thead>
+									<tbody>
+										<form id="myform" method="POST">
+											<input type="text" id="selectedDay" name="selectedDay" value="" hidden>
+										</form>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 		</section>
-		<div class="container col row-cols-1">
-			
-			<div class="card row" style="width: 18rem; height: auto">
-				<div class="card-body">
-					<h5 class="card-header"><strong>Packing List</strong></h5>
-					<div class="card-text m-2">
-						{% for task in tasks %}
-						<li>{{task.text}}</li>
-						{% endfor %}
-					</div>
-					<a class="col-1" href="/todolist/" style="margin-right: 25px;">
-						<button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
-					</a>
+		<div class="container col row-cols-1" style="padding-top:90px;">
+			<div class="card row" style="width: 25rem; min-height: 24.5rem;" >
+				<div class="card-body" id="aaa">
+					<h5 class="card-header"><strong>{{date}}</strong></h5>
+					{% if tasks|length > 0 %}
+						<div class="card-text m-2">
+							{% for task in tasks%}
+							<li>{{task.text}}</li>
+							{% endfor %}
+						</div>
+						<a class="col-1" href="/todolist/" style="margin-right: 25px;">
+							<button type="button" class="btn btn-sm text-center" id="edit-btn"><i class="far fa-edit" style="font-size:20px"></i></button>
+						</a>
+					{% else %}
+						<div class="card-text m-2">
+							<i>No tasks or events found </i>
+						</div>
+					{% endif %}
+					
 				</div>
 			</div>
 		</div>
@@ -151,28 +236,56 @@
 	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
 	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 	<script>
+		
 		$('table').on('click', 'td',function(e){
 			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-			day = $(this).html();
-			mon_year = $('.head-month').html()
-			month = String(mon_year.split("-")[0])
-			year =mon_year.split("-")[1]
-			date = new Date( day + month+ year);
-			date = date.toLocaleString().split(',')[0].split("/")
-			let m = date[0];
-			let d= date[1];
-			let y = date[2];
-			if (m.length < 2) {
-			m = '0' + m;
-			}
-			if (d.length < 2) {
-			d = '0' + d;
-			}
-			let formattedDate = `${m}-${d}-${y}`;
-			console.log(window.location.pathname);
-			window.location =  "/calendar/"+ formattedDate +"/"
+			var day = $(this).html();
+			var mon_year = ($('.head-month').html()).split(" - ");
+			var month = String(months.indexOf(mon_year[0]) + 1);
+			var year = mon_year[1];
+			if (day.length < 2) {
+				day = '0' + day;
+			};
+			if (month.length < 2) {
+				month = '0' + month;
+			};
+			let formattedDate = `${month}-${day}-${year}`;
+			$('input').val(formattedDate);
+			submitForm();
+			
+		});
+		$('#reset').on('click',function(e){
+			var today = new Date();
+			var month = String(today.getMonth()+1)
+			var day = String(today.getDate() )
+			var year = today.getFullYear()
+			if (day.length < 2) {
+				day = '0' + day;
+			};
+			if (month.length < 2) {
+				month = '0' + month;
+			};
+			let formattedDate = `${month}-${day}-${year}`;
+			console.log(formattedDate);
+			$('input').val(formattedDate);
+			submitForm();	
 		});
 
-		
+		function submitForm() {
+			var myform = document.getElementById("myform");
+			var data = new FormData(myform);
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "");
+			xhr.send(data);
+			dataType: 'html'
+			xhr.onload = function() {
+				var parser = new DOMParser();
+				var xmlDoc = parser.parseFromString(xhr.responseText, "text/html");
+				var tds = xmlDoc.getElementById("aaa");
+				console.log(tds);
+				$('#aaa').replaceWith(tds);
+			  };
+			return false; 
+		}
 	</script>
 {% endblock %}
