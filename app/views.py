@@ -8,7 +8,7 @@ from datetime import date, datetime
 from . import db  
 import datetime
 
-views = Blueprint('views', __name__)
+views = Blueprint('views',__name__)
 
 @views.route('/')
 def landing_page():
@@ -91,4 +91,3 @@ def delete_task(title, task_id):
     db.session.delete(task)
     db.session.commit()
     return redirect(url_for("views.doc", title=title))
-
