@@ -23,26 +23,15 @@ def home_page():
 def signup_page():
     return render_template("signup.html")
 
-@views.route('/calendar/')
+@views.route('/calendar/', methods=['GET', 'POST'])
 @login_required
 def calendar():
     date = datetime.date.today().strftime("%m-%d-%Y")
+    if request.method == 'POST':
+        date = request.form.get('selectedDay')
     tasks = Task.query.filter_by(date=date).all()
-    todolist = []
-    for task in tasks:
-        todolist.append(Todolist.query.filter_by(id=task.todolist).first())
-    return render_template("calendar.html", date=date, tasks=tasks, todolist=todolist)
-
-@views.route('/calendar/<date_str>/', methods=['GET', 'POST'])
-@login_required
-def get_calendar(date_str):
-    tasks = Task.query.filter_by(date=date_str).all()
-    date_list = date_str.split('-')
-    todolist = []
-    for task in tasks:
-        todolist.append(Todolist.query.filter_by(id=task.todolist).first())
-    return render_template('calendar.html', date=date_list, tasks=tasks, todolist=todolist)
-
+    return render_template("calendar.html", date=date, tasks = tasks)
+    
 @views.route('/todolist/', methods=['GET', 'POST'])
 @login_required
 def to_do_lists():
@@ -89,6 +78,9 @@ def update(title, id):
 @views.route("/delete/<int:todo_id>/", methods=['GET', 'POST'])
 def delete_list(todo_id):
     todo = Todolist.query.filter_by(id=todo_id).first()
+    tasks = Task.query.filter_by(todolist=todo_id).all()
+    for task in tasks:
+        db.session.delete(task)
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for("views.to_do_lists"))

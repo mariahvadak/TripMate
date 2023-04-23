@@ -107,7 +107,7 @@
 <form method="POST">
 	<div class="row row-cols-2 mx-5 my-3 justify-content-center" id="list-name-input-container" >
 		<div class="col-6" style="padding-left: 0" >
-			<input type="text" id="text" class="form-control" name="text" placeholder="Enter a new task">
+			<input type="text" id="text" class="form-control" name="text" placeholder="Enter a new task" required>
 		</div>   
 		<div class="col-1">     
 			<input type="date" id="datepicker" name="datepicker" placeholder="Due date" class="p-0">         
@@ -146,7 +146,7 @@
 		{% endfor %}     
 	</table>
 	{% else %}
-	<p>No task found</p>
+	<p class="m-3" style="font-style: italic;">No tasks found</p>
 	{% endif %}
 </div>
 	<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
