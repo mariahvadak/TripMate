@@ -3,30 +3,16 @@
 	"use strict";
 
 	document.addEventListener('DOMContentLoaded', function(){
-        var url = window.location.href.split('/')
-        if (url.length > 5){
-            var currentday = url[4].split('-')
-            var date_str = currentday[2] + "-" + currentday[0] + "-" + currentday[1];
-            var today = new Date(date_str)
-            var year = today.getFullYear(),
-            month = today.getMonth(),
-            monthTag =["January","February","March","April","May","June","July","August","September","October","November","December"],
-            day = today.getDate(),
-            days = document.getElementsByTagName('td'),
-            selectedDay,
-            setDate,
-            daysLen = days.length;
-        } else {
-            var today = new Date()
-            year = today.getFullYear(),
-            month = today.getMonth(),
-            monthTag =["January","February","March","April","May","June","July","August","September","October","November","December"],
-            day = today.getDate(),
-            days = document.getElementsByTagName('td'),
-            selectedDay,
-            setDate,
-            daysLen = days.length;
-        };
+        var today = new Date(),
+        year = today.getFullYear(),
+        month = today.getMonth(),
+        monthTag =["January","February","March","April","May","June","July","August","September","October","November","December"],
+        day = today.getDate(),
+        days = document.getElementsByTagName('td'),
+        selectedDay,
+        setDate,
+        daysLen = days.length;
+        
 // options should like '2014-01-01'
     function Calendar(selector, options) {
         this.options = options;
@@ -34,7 +20,6 @@
     }
     
     Calendar.prototype.draw  = function() {
-        this.getCookie('selected_day');
         this.getOptions();
         this.drawDays();
         var that = this,
@@ -60,11 +45,8 @@
     
     Calendar.prototype.drawDays = function() {
         var startDay = new Date(year, month, 1).getDay(),
-//      下面表示这个月总共有几天
             nDays = new Date(year, month + 1, 0).getDate(),
-    
             n = startDay;
-//      清除原来的样式和日期
         for(var k = 0; k <42; k++) {
             days[k].innerHTML = '';
             days[k].id = '';
@@ -105,8 +87,6 @@
         o.className = "selected";
         selectedDay = new Date(year, month, o.innerHTML);
         this.drawHeader(o.innerHTML);
-        this.setCookie('selected_day', 1);
-        
     };
     
     Calendar.prototype.preMonth = function() {
@@ -143,43 +123,15 @@
     
      Calendar.prototype.reset = function() {
         var today = new Date()
+        selectedDay = today,
         year = today.getFullYear(),
         month = today.getMonth(),
         day = today.getDate();
-         this.options = undefined;
-         this.drawDays();
-     };
-    
-    Calendar.prototype.setCookie = function(name, expiredays){
-        if(expiredays) {
-            var date = new Date();
-            date.setTime(date.getTime() + (expiredays*24*60*60*1000));
-            var expires = "; expires=" +date.toGMTString();
-        }else{
-            var expires = "";
-        }
-        document.cookie = name + "=" + selectedDay + expires + "; path=/";
+        this.options = undefined;
+        this.drawDays();
     };
-    
-    Calendar.prototype.getCookie = function(name) {
-        if(document.cookie.length){
-            var arrCookie  = document.cookie.split(';'),
-                nameEQ = name + "=";
-            for(var i = 0, cLen = arrCookie.length; i < cLen; i++) {
-                var c = arrCookie[i];
-                while (c.charAt(0)==' ') {
-                    c = c.substring(1,c.length);
-                    
-                }
-                if (c.indexOf(nameEQ) === 0) {
-                    selectedDay =  new Date(c.substring(nameEQ.length, c.length));
-                }
-            }
-        }
-    };
+
     var calendar = new Calendar();
-    
-        
 }, false);
 
 })(jQuery);
