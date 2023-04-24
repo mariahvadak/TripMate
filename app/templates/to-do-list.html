@@ -148,6 +148,11 @@
         createBtn.click(function() {
             $('#list-name-input-container').show();
         });
+        document.querySelector('#create-list-btn')
+        .addEventListener('click', function(){ 
+            console.log('The create button was clicked!') 
+        });
+
     </script>
 
 {% endblock %}
