@@ -33,6 +33,7 @@ class Todolist(db.Model):
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     todolist= db.Column(db.Integer, db.ForeignKey('todolist.id'))
     date = db.Column(db.String(100))
     text = db.Column(db.String(100))
