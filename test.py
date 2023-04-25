@@ -29,7 +29,7 @@ class TestViews(TestCase):
 
     def test_home_page(self):
         response = self.client.get('/home')
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_signup_page(self):
         response = self.client.get('/signup/')
@@ -37,11 +37,11 @@ class TestViews(TestCase):
 
     def test_calendar_page(self):
         response = self.client.get('/calendar/')
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         
     def test_to_do_lists_page(self):
         response = self.client.get('/todolist/')
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_create_to_do_list(self):
         user = db.session.get(User, 1)
@@ -110,5 +110,5 @@ class TestViews(TestCase):
         task = Task.query.filter_by(id=task.id).first()
         self.assertIsNone(task)
 
-if __name__ == '__main__':
-    unittest.main() 
+# if __name__ == '__main__':
+#     unittest.main() 

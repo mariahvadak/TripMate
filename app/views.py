@@ -27,9 +27,11 @@ def signup_page():
 @login_required
 def calendar():
     date = datetime.date.today().strftime("%m-%d-%Y")
+    userId = current_user.get_id()
+    # todolist = Todolist.query.filter_by(user=userId).all()
     if request.method == 'POST':
         date = request.form.get('selectedDay')
-    tasks = Task.query.filter_by(date=date).all()
+    tasks = Task.query.filter_by(user= userId, date=date, complete = False).all()
     return render_template("calendar.html", date=date, tasks = tasks)
     
 @views.route('/todolist/', methods=['GET', 'POST'])
@@ -53,6 +55,7 @@ def doc(title):
     to_do_list = Todolist.query.filter_by(title=title).first()
     tasks = Task.query.filter_by(todolist=to_do_list.id).all()
     if request.method == 'POST':
+        userId = current_user.get_id()
         todolist= to_do_list.id
         if request.form.get('datepicker') == '':
             date = datetime.date.today().strftime("%m-%d-%Y")
@@ -61,7 +64,7 @@ def doc(title):
         print(date)
         text = request.form.get('text')
         complete = False
-        new_task = Task(todolist=todolist, date=date, text=text, complete=complete)
+        new_task = Task(user = userId, todolist=todolist, date=date, text=text, complete=complete)
         db.session.add(new_task)
         db.session.commit()
         return redirect(url_for('views.doc', title=title))
@@ -80,7 +83,7 @@ def delete_list(todo_id):
     todo = Todolist.query.filter_by(id=todo_id).first()
     tasks = Task.query.filter_by(todolist=todo_id).all()
     for task in tasks:
-        db.session.delete(task)
+        db.session.delete(tasks)
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for("views.to_do_lists"))
