@@ -16,7 +16,7 @@
         </div>
       </ul>
     <h3>Check our project here:</h3>
-      <ul><p>......Coming Soon......</p></ul>
+      <ul><p>https://tripmate.onrender.com/</p></ul>
   </ul>
 <h2 align="left">Setup & Installation</h2>
 <ul>
