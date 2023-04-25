@@ -270,6 +270,10 @@
 			$('input').val(formattedDate);
 			submitForm();	
 		});
+		document.querySelector('#reset')
+        .addEventListener('click', function(){ 
+            console.log('The calendar has been reset!') 
+        });
 
 		function submitForm() {
 			var myform = document.getElementById("myform");

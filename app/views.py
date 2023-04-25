@@ -91,4 +91,3 @@ def delete_task(title, task_id):
     db.session.delete(task)
     db.session.commit()
     return redirect(url_for("views.doc", title=title))
-
